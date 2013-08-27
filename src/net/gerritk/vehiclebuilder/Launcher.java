@@ -9,12 +9,16 @@ import javax.swing.JMenuBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import net.gerritk.vehiclebuilder.controllers.VehicleSetupController;
+import net.gerritk.vehiclebuilder.models.*;
+import net.gerritk.vehiclebuilder.resources.ResourceLoader;
 import net.gerritk.vehiclebuilder.ui.MenuBar;
 
 public class Launcher {
 	private static Launcher instance = null;
 	
 	private JFrame frame;
+	private ResourceLoader resourceLoader;
 	
 	private Launcher() {
 		try {
@@ -24,6 +28,8 @@ public class Launcher {
 			e.printStackTrace();
 		}
 		
+		resourceLoader = new ResourceLoader("resources/items");		
+		
 		frame = new JFrame("Vehicle Builder für Leitstellenspiel.de");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -31,6 +37,13 @@ public class Launcher {
 		frame.setJMenuBar(menuBar);
 		
 		// TODO add Controllers, Models & Views
+		CabinModel cabinModel = new CabinModel();
+		StructureModel structureModel = new StructureModel();
+		TemplateModel templateModel = new TemplateModel();
+		ChildModel childModel = new ChildModel();
+		VehicleModel vehicleModel = new VehicleModel(cabinModel, structureModel, templateModel);
+		
+		VehicleSetupController vehicleSetupController = new VehicleSetupController(cabinModel, structureModel, templateModel, childModel, vehicleModel);
 		
 		setFrameToScreenCenter();
 		
@@ -52,6 +65,9 @@ public class Launcher {
 		return frame;
 	}
 	
+	public ResourceLoader getResourceLoader() {
+		return resourceLoader;
+	}
 	/*
 	 * Static
 	 */
