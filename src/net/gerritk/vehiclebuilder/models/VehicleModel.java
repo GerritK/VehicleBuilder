@@ -49,6 +49,11 @@ public class VehicleModel extends Model {
 		this.childs = childs;
 		setChanged();
 	}
+	
+	public void addChild(Child c) {
+		this.childs.add(c);
+		setChanged();
+	}
 
 	public Template getTemplate() {
 		return template;

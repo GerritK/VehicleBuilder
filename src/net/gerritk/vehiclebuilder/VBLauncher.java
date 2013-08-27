@@ -14,13 +14,14 @@ import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.resources.ResourceLoader;
 import net.gerritk.vehiclebuilder.ui.MenuBar;
 
-public class Launcher {
-	private static Launcher instance = null;
+public class VBLauncher {
+	private static VBLauncher instance;
 	
 	private JFrame frame;
 	private ResourceLoader resourceLoader;
 	
-	private Launcher() {
+	private VBLauncher() {
+		instance = this;
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
@@ -44,6 +45,13 @@ public class Launcher {
 		VehicleModel vehicleModel = new VehicleModel(cabinModel, structureModel, templateModel);
 		
 		VehicleSetupController vehicleSetupController = new VehicleSetupController(cabinModel, structureModel, templateModel, childModel, vehicleModel);
+		
+		// Notify ALL
+		cabinModel.notifyObservers();
+		structureModel.notifyObservers();
+		templateModel.notifyObservers();
+		childModel.notifyObservers();
+		vehicleModel.notifyObservers();
 		
 		setFrameToScreenCenter();
 		
@@ -71,18 +79,11 @@ public class Launcher {
 	/*
 	 * Static
 	 */
-	public static Launcher getInstance() {
-		if(instance == null) {
-			synchronized(Launcher.class) {
-				if(instance == null) {
-					instance = new Launcher();
-				}
-			}
-		}
+	public static VBLauncher getInstance() {
 		return instance;
 	}
 	
 	public static void main(String[] args) {
-		getInstance();
+		new VBLauncher();
 	}
 }

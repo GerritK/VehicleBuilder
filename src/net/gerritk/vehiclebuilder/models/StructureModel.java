@@ -2,7 +2,7 @@ package net.gerritk.vehiclebuilder.models;
 
 import java.util.ArrayList;
 
-import net.gerritk.vehiclebuilder.Launcher;
+import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.items.Structure;
 
 public class StructureModel extends Model {
@@ -10,7 +10,7 @@ public class StructureModel extends Model {
 	
 	public StructureModel() {
 		structures = new ArrayList<Structure>();
-		structures.addAll(Launcher.getInstance().getResourceLoader().loadStructures());
+		structures.addAll(VBLauncher.getInstance().getResourceLoader().loadStructures());
 	}
 
 	/*

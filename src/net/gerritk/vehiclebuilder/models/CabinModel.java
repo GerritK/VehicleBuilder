@@ -2,7 +2,7 @@ package net.gerritk.vehiclebuilder.models;
 
 import java.util.ArrayList;
 
-import net.gerritk.vehiclebuilder.Launcher;
+import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.items.Cabin;
 
 public class CabinModel extends Model {
@@ -10,7 +10,7 @@ public class CabinModel extends Model {
 	
 	public CabinModel() {
 		cabins = new ArrayList<Cabin>();
-		cabins.addAll(Launcher.getInstance().getResourceLoader().loadCabins());
+		cabins.addAll(VBLauncher.getInstance().getResourceLoader().loadCabins());
 	}
 	
 	/*

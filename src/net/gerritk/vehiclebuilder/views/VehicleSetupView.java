@@ -1,4 +1,6 @@
 package net.gerritk.vehiclebuilder.views;
+import java.awt.event.ActionListener;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
@@ -7,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 
+import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.items.*;
 
 public class VehicleSetupView extends View {
@@ -16,7 +19,9 @@ public class VehicleSetupView extends View {
 	private JComboBox<Cabin> selectorCabin;
 	private JComboBox<Structure> selectorStructure;
 
-	public VehicleSetupView() {
+	public VehicleSetupView(Controller controller) {
+		super(controller);
+		
 		setLayout(new FormLayout(new ColumnSpec[] {
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
@@ -63,6 +68,8 @@ public class VehicleSetupView extends View {
 		add(selectorChild, "4, 8, fill, default");
 		
 		JButton btnAddChild = new JButton("Hinzuf\u00FCgen");
+		btnAddChild.setActionCommand("addChild");
+		btnAddChild.addActionListener((ActionListener) controller);
 		add(btnAddChild, "4, 10");
 	}
 	
