@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.swing.JMenuBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -15,7 +14,6 @@ import net.gerritk.vehiclebuilder.controllers.VehicleOutputController;
 import net.gerritk.vehiclebuilder.controllers.VehicleSetupController;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.resources.ResourceLoader;
-import net.gerritk.vehiclebuilder.ui.MenuBar;
 
 public class VBLauncher {
 	private static VBLauncher instance;
@@ -36,9 +34,6 @@ public class VBLauncher {
 		
 		frame = new JFrame("Vehicle Builder für Leitstellenspiel.de");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JMenuBar menuBar = new MenuBar();
-		frame.setJMenuBar(menuBar);
 		
 		// TODO add Controllers, Models & Views
 		CabinModel cabinModel = new CabinModel();

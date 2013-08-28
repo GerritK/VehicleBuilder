@@ -2,6 +2,7 @@ package net.gerritk.vehiclebuilder.views;
 
 import java.awt.event.ActionListener;
 
+import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 
@@ -11,6 +12,9 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JSeparator;
@@ -47,6 +51,8 @@ public class VehicleBuilderView extends View {
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,}));
 		
+		createMenuBar(controller);
+		
 		JLabel lblBanner = new JLabel(IconSet.BANNER);
 		add(lblBanner, "4, 2, 3, 1, fill, default");
 		
@@ -72,6 +78,49 @@ public class VehicleBuilderView extends View {
 		btnExport.setActionCommand("export");
 		btnExport.addActionListener((ActionListener) controller);
 		add(btnExport, "4, 12, 3, 1, center, default");
+	}
+	
+	private void createMenuBar(Controller controller) {
+		JMenuBar menuBar = new JMenuBar();
+		
+		// File Menu
+		JMenu mnFile = new JMenu("Datei");
+		menuBar.add(mnFile);
+		
+		JMenuItem mntmSave = new JMenuItem("Speichern");
+		mntmSave.setActionCommand("save");
+		mntmSave.addActionListener((ActionListener) controller);
+		mnFile.add(mntmSave);
+		
+		JMenuItem mntmLoad = new JMenuItem("Laden");
+		mntmLoad.setActionCommand("save");
+		mntmLoad.addActionListener((ActionListener) controller);
+		mnFile.add(mntmLoad);
+
+		mnFile.addSeparator();
+		
+		JMenuItem mntmExport = new JMenuItem("Exportieren");
+		mntmExport.setActionCommand("export");
+		mntmExport.addActionListener((ActionListener) controller);
+		mnFile.add(mntmExport);
+		
+		mnFile.addSeparator();
+		
+		JMenuItem mntmQuit = new JMenuItem("Beenden");
+		mntmQuit.setActionCommand("quit");
+		mntmQuit.addActionListener((ActionListener) controller);
+		mnFile.add(mntmQuit);
+		
+		// Help Menu
+		JMenu mnHelp = new JMenu("Hilfe");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmAbout = new JMenuItem("Über");
+		mntmAbout.setActionCommand("about");
+		mntmAbout.addActionListener((ActionListener) controller);
+		mnHelp.add(mntmAbout);
+
+		VBLauncher.getInstance().getFrame().setJMenuBar(menuBar);
 	}
 	
 	/*
