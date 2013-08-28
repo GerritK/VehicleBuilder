@@ -1,8 +1,13 @@
 package net.gerritk.vehiclebuilder.controllers;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.text.DecimalFormat;
 import java.util.Observable;
 
 import javax.swing.JSlider;
@@ -11,9 +16,10 @@ import javax.swing.event.ChangeListener;
 
 import net.gerritk.vehiclebuilder.models.OutputModel;
 import net.gerritk.vehiclebuilder.models.VehicleModel;
+import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleOutputView;
 
-public class VehicleOutputController extends Controller implements MouseListener, ChangeListener {
+public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, ChangeListener, ActionListener {
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
 	private VehicleOutputView outputView;
@@ -28,6 +34,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 		this.outputModel.addObserver(this);
 		
 		this.outputView.addMouseListener(this);
+		this.outputView.addMouseWheelListener(this);
 	}
 	
 	@Override
@@ -37,6 +44,13 @@ public class VehicleOutputController extends Controller implements MouseListener
 			outputView.getSliders()[0].setValue(outputModel.getBackground().getRed());
 			outputView.getSliders()[1].setValue(outputModel.getBackground().getGreen());
 			outputView.getSliders()[2].setValue(outputModel.getBackground().getBlue());
+			outputView.getLblScale().setText(new DecimalFormat("0.00").format(outputModel.getScale()) + " x");
+			
+			if(outputModel.isBluelight()) {
+				outputView.getBtnBluelight().setIcon(IconSet.BLUELIGHT);
+			} else {
+				outputView.getBtnBluelight().setIcon(IconSet.BLUELIGHT.DISABLED);
+			}
 		}
 	}
 
@@ -88,6 +102,20 @@ public class VehicleOutputController extends Controller implements MouseListener
 			}
 			
 			outputModel.setBackground(new Color(r, g, b));
+			outputModel.notifyObservers();
+		}
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		outputModel.setScale(outputModel.getScale() + (float) -e.getWheelRotation() / 5);
+		outputModel.notifyObservers();
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand().equals("bluelight")) {
+			outputModel.setBluelight(!outputModel.isBluelight());
 			outputModel.notifyObservers();
 		}
 	}

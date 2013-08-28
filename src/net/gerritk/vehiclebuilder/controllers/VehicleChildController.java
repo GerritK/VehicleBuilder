@@ -16,6 +16,7 @@ import javax.swing.event.ListSelectionListener;
 import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.models.OutputModel;
 import net.gerritk.vehiclebuilder.models.VehicleModel;
+import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleChildView;
 
 public class VehicleChildController extends Controller implements ActionListener, ListSelectionListener, MouseListener, MouseMotionListener {
@@ -45,8 +46,32 @@ public class VehicleChildController extends Controller implements ActionListener
 			for(Child c : vehicleModel.getChilds()) {
 				model.addElement(c);
 			}
-		} else if(o == outputModel) {
 			
+			if(model.isEmpty()) {
+				childView.getBtnClear().setEnabled(false);
+			} else {
+				childView.getBtnClear().setEnabled(true);
+			}
+		} else if(o == outputModel) {
+			if(outputModel.getSelectedChild() != null) {
+				if(outputModel.getSelectedChild().isBehind()) {
+					childView.getBtnDrawOrder().setIcon(IconSet.BEHIND);
+				} else {
+					childView.getBtnDrawOrder().setIcon(IconSet.ONTOP);
+				}
+				
+				childView.getBtnUp().setEnabled(true);
+				childView.getBtnDown().setEnabled(true);
+				childView.getBtnDrawOrder().setEnabled(true);
+				childView.getBtnDelete().setEnabled(true);
+			} else {
+				childView.getBtnUp().setEnabled(false);
+				childView.getBtnDown().setEnabled(false);
+				childView.getBtnDrawOrder().setEnabled(false);
+				childView.getBtnDelete().setEnabled(false);
+			}
+			
+			childView.getList().repaint();
 		}
 	}
 	

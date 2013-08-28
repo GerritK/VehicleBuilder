@@ -53,5 +53,6 @@ public class OutputModel extends Model {
 
 	public void setBluelight(boolean bluelight) {
 		this.bluelight = bluelight;
+		setChanged();
 	}
 }
