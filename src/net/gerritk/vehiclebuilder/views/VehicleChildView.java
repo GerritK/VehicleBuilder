@@ -1,5 +1,6 @@
 package net.gerritk.vehiclebuilder.views;
 
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 
 import net.gerritk.vehiclebuilder.controllers.Controller;
@@ -13,6 +14,8 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.BorderFactory;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
@@ -25,6 +28,8 @@ public class VehicleChildView extends View {
 	private JButton btnDrawOrder;
 	private JButton btnDelete;
 	private JButton btnDown;
+	private JMenuItem miSetName;
+	private JMenuItem miRemoveName;
 
 	public VehicleChildView(Controller controller) {
 		super(controller);
@@ -74,6 +79,30 @@ public class VehicleChildView extends View {
 		btnDelete.setActionCommand("delete");
 		btnDelete.addActionListener((ActionListener) controller);
 		add(btnDelete, "3, 7");
+		
+		miSetName = new JMenuItem("Namen festlegen");
+		miSetName.setActionCommand("setCustomName");
+		miSetName.addActionListener((ActionListener) controller);
+		
+		miRemoveName = new JMenuItem("Namen entfernen");
+		miRemoveName.setActionCommand("removeCustomName");
+		miRemoveName.addActionListener((ActionListener) controller);
+	}
+	
+	public void showPopupMenu() {
+		Rectangle r = list.getCellBounds(list.getSelectedIndex(), list.getSelectedIndex());
+		if(r != null) {
+			JPopupMenu popupMenu = new JPopupMenu();
+			
+			popupMenu.add(miSetName);
+			
+			Child c = list.getSelectedValue();
+			if(c.getCustomName() != null && !c.getCustomName().isEmpty()) {
+				popupMenu.add(miRemoveName);
+			}
+			
+			popupMenu.show(list, 5, r.y + r.height);
+		}
 	}
 	
 	/*

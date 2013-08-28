@@ -10,6 +10,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.Observable;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -102,6 +103,16 @@ public class VehicleChildController extends Controller implements ActionListener
 				vehicleModel.getChilds().clear();
 				vehicleModel.notifyObservers(true);
 				break;
+			case "setCustomName":
+				String name = JOptionPane.showInputDialog(childView.getParent(), "Wie soll der Zusatz heiﬂen?", "Namen ‰ndern", 
+						JOptionPane.PLAIN_MESSAGE, null, null, outputModel.getSelectedChild().getCustomName()).toString();
+				outputModel.getSelectedChild().setCustomName(name);
+				outputModel.notifyObservers(true);
+				break;
+			case "removeCustomName":
+				outputModel.getSelectedChild().setCustomName(null);
+				outputModel.notifyObservers(true);
+				break;
 		}
 	}
 	
@@ -119,11 +130,19 @@ public class VehicleChildController extends Controller implements ActionListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		selectionWorkaround(e.getPoint());
+		
+		if(e.isPopupTrigger()) {
+			childView.showPopupMenu();
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		selectionWorkaround(e.getPoint());
+		
+		if(e.isPopupTrigger()) {
+			childView.showPopupMenu();
+		}
 	}
 
 	@Override
