@@ -1,5 +1,7 @@
 package net.gerritk.vehiclebuilder.views;
 
+import java.awt.event.ActionListener;
+
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 
@@ -67,6 +69,15 @@ public class VehicleBuilderView extends View {
 		add(separator, "2, 10, 7, 1");
 		
 		JButton btnExport = new JButton("Exportieren");
+		btnExport.setActionCommand("export");
+		btnExport.addActionListener((ActionListener) controller);
 		add(btnExport, "4, 12, 3, 1, center, default");
+	}
+	
+	/*
+	 * Getter & Setter
+	 */
+	public JTextField getTxtName() {
+		return txtName;
 	}
 }

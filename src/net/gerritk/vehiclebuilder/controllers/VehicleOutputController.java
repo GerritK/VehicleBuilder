@@ -3,6 +3,8 @@ package net.gerritk.vehiclebuilder.controllers;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
@@ -10,7 +12,9 @@ import java.awt.event.MouseWheelListener;
 import java.text.DecimalFormat;
 import java.util.Observable;
 
+import javax.swing.BorderFactory;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -19,7 +23,7 @@ import net.gerritk.vehiclebuilder.models.VehicleModel;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleOutputView;
 
-public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, ChangeListener, ActionListener {
+public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, ChangeListener, ActionListener, FocusListener {
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
 	private VehicleOutputView outputView;
@@ -35,6 +39,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 		
 		this.outputView.addMouseListener(this);
 		this.outputView.addMouseWheelListener(this);
+		this.outputView.addFocusListener(this);
 	}
 	
 	@Override
@@ -56,6 +61,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		outputView.requestFocusInWindow();
+		
 		if(e.isPopupTrigger()) {
 			outputView.showPopupMenu(e.getPoint());
 		}
@@ -118,6 +125,17 @@ public class VehicleOutputController extends Controller implements MouseListener
 			outputModel.setBluelight(!outputModel.isBluelight());
 			outputModel.notifyObservers();
 		}
+	}
+	
+	@Override
+	public void focusGained(FocusEvent e) {
+		outputView.setBorder(BorderFactory.createEtchedBorder(UIManager.getColor("List.selectionForeground"),
+				UIManager.getColor("List.selectionBackground")));
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		outputView.setBorder(BorderFactory.createEtchedBorder());
 	}
 	
 	/*

@@ -21,7 +21,9 @@ public class VehicleBuilderController extends Controller implements ActionListen
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		if(o == vehicleModel) {
+			builderView.getTxtName().setText(vehicleModel.getStructure().getName());
+		}
 	}
 
 	@Override

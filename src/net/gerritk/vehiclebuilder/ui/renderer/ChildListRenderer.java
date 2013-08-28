@@ -18,12 +18,6 @@ public class ChildListRenderer implements ListCellRenderer<Child> {
 		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
 		layout.setVgap(1);
 		panel.setLayout(layout);
-
-		if(selected) {
-			panel.setBackground(UIManager.getColor("List.selectionBackground"));
-		} else {
-			panel.setBackground(UIManager.getColor("List.background"));
-		}
 		
 		JLabel lblType = new JLabel(IconSet.SCREW);
 		if(value instanceof Bluelight) {
@@ -48,6 +42,14 @@ public class ChildListRenderer implements ListCellRenderer<Child> {
 			panel.add(lblCustomName);
 			
 			lblName.setText(value.getCustomName());
+		}
+		
+		if(selected) {
+			panel.setBackground(UIManager.getColor("List.selectionBackground"));
+			lblName.setForeground(UIManager.getColor("List.selectionForeground"));
+		} else {
+			panel.setBackground(UIManager.getColor("List.background"));
+			lblName.setForeground(UIManager.getColor("List.foreground"));
 		}
 		
 		return panel;

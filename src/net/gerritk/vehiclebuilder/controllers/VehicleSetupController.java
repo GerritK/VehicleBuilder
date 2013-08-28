@@ -73,6 +73,9 @@ public class VehicleSetupController extends Controller implements ActionListener
 				vehicleModel.getChilds().add(((Child) setupView.getSelectorChild().getSelectedItem()).clone());
 				vehicleModel.notifyObservers(true);
 				break;
+			case "export":
+				vehicleModel.export();
+				break;
 		}
 	}
 
@@ -84,12 +87,15 @@ public class VehicleSetupController extends Controller implements ActionListener
 			if(i instanceof Cabin) {
 				Cabin c = (Cabin) i;
 				vehicleModel.setCabin(c);
+				vehicleModel.notifyObservers();
 			} else if(i instanceof Structure) {
 				Structure s = (Structure) i;
 				vehicleModel.setStructure(s);
+				vehicleModel.notifyObservers();
 			} else if(i instanceof Template) {
 				Template t = (Template) i;
 				vehicleModel.setTemplate(t);
+				vehicleModel.notifyObservers();
 			}
 		}
 	}
