@@ -39,15 +39,14 @@ public class VehicleChildController extends Controller implements ActionListener
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o instanceof VehicleModel) {
+		if(o == vehicleModel) {
 			DefaultListModel<Child> model = (DefaultListModel<Child>) childView.getList().getModel();
 			model.clear();
 			for(Child c : vehicleModel.getChilds()) {
 				model.addElement(c);
 			}
-			if(model.contains(outputModel.getSelectedChild())) {
-				childView.getList().setSelectedValue(outputModel.getSelectedChild(), true);
-			}
+		} else if(o == outputModel) {
+			
 		}
 	}
 	
@@ -55,8 +54,16 @@ public class VehicleChildController extends Controller implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 			case "up":
+				vehicleModel.sortChildUp(outputModel.getSelectedChild());
+				Child tmp = outputModel.getSelectedChild();
+				vehicleModel.notifyObservers();
+				childView.getList().setSelectedValue(tmp, true);
 				break;
 			case "down":
+				vehicleModel.sortChildDown(outputModel.getSelectedChild());
+				tmp = outputModel.getSelectedChild();
+				vehicleModel.notifyObservers();
+				childView.getList().setSelectedValue(tmp, true);
 				break;
 			case "drawOrder":
 				outputModel.getSelectedChild().setBehind(!outputModel.getSelectedChild().isBehind());
@@ -85,6 +92,16 @@ public class VehicleChildController extends Controller implements ActionListener
 	}
 
 	@Override
+	public void mousePressed(MouseEvent e) {
+		selectionWorkaround(e.getPoint());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		selectionWorkaround(e.getPoint());
+	}
+
+	@Override
 	public void mouseMoved(MouseEvent e) {
 	}
 
@@ -98,16 +115,6 @@ public class VehicleChildController extends Controller implements ActionListener
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		selectionWorkaround(e.getPoint());
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		selectionWorkaround(e.getPoint());
 	}
 	
 	public void selectionWorkaround(Point p) {

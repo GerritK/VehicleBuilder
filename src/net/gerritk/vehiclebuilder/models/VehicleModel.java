@@ -33,6 +33,30 @@ public class VehicleModel extends Model {
 		// TODO implement old saveLogic
 	}
 	
+	public void sortChildUp(Child child) {
+		int sindex = childs.indexOf(child);
+		
+		if(sindex > 0) {
+			Child tmp = childs.get(sindex - 1);
+			
+			childs.set(sindex - 1, child);
+			childs.set(sindex, tmp);
+			setChanged();
+		}
+	}
+
+	public void sortChildDown(Child child) {
+		int sindex = childs.indexOf(child);
+		
+		if(sindex + 1 < childs.size()) {
+			Child tmp = childs.get(sindex + 1);
+			
+			childs.set(sindex + 1, child);
+			childs.set(sindex, tmp);
+			setChanged();
+		}
+	}
+	
 	/*
 	 * Getter & Setter
 	 */
