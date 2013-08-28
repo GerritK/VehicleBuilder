@@ -51,7 +51,7 @@ public class VBLauncher {
 		VehicleSetupController vsetupController = new VehicleSetupController(cabinModel, structureModel, 
 				templateModel, childModel, vehicleModel);
 		
-		VehicleChildController vchildController = new VehicleChildController(vehicleModel);
+		VehicleChildController vchildController = new VehicleChildController(vehicleModel, outputModel);
 		
 		VehicleOutputController voutputController = new VehicleOutputController(vehicleModel, outputModel);
 		

@@ -2,9 +2,12 @@ package net.gerritk.vehiclebuilder.models;
 
 import java.awt.Color;
 
+import net.gerritk.vehiclebuilder.items.Child;
+
 public class OutputModel extends Model {
 	private Color background;
 	private float scale;
+	private Child selectedChild;
 	
 	public OutputModel() {
 		background = new Color(255, 255, 255);
@@ -31,6 +34,15 @@ public class OutputModel extends Model {
 		if(scale < 1) scale = 1;
 		if(scale > 10) scale = 10;
 		this.scale = scale;
+		setChanged();
+	}
+
+	public Child getSelectedChild() {
+		return selectedChild;
+	}
+
+	public void setSelectedChild(Child selectedChild) {
+		this.selectedChild = selectedChild;
 		setChanged();
 	}
 }
