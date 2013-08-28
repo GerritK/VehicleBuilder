@@ -1,5 +1,6 @@
 package net.gerritk.vehiclebuilder.views;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 
@@ -28,8 +29,11 @@ public class VehicleOutputView extends View {
 			slColors[i].addChangeListener((ChangeListener) controller);
 		}
 		slColors[0].setName("red");
+		slColors[0].setBackground(Color.RED);
 		slColors[1].setName("green");
+		slColors[1].setBackground(Color.GREEN);
 		slColors[2].setName("blue");
+		slColors[2].setBackground(Color.BLUE);
 	}
 	
 	public void showPopupMenu(Point p) {

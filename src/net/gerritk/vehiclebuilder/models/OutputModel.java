@@ -11,7 +11,7 @@ public class OutputModel extends Model {
 	private boolean bluelight;
 	
 	public OutputModel() {
-		background = new Color(255, 255, 255);
+		background = Color.LIGHT_GRAY;
 		scale = 1.0f;
 	}
 	
