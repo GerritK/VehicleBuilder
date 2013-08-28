@@ -8,6 +8,7 @@ import net.gerritk.vehiclebuilder.items.Structure;
 import net.gerritk.vehiclebuilder.items.Template;
 
 public class VehicleModel extends Model {
+	private String name;
 	private Cabin cabin;
 	private Structure structure;
 	private Template template;
@@ -18,6 +19,18 @@ public class VehicleModel extends Model {
 		structure = structures.getStructures().get(0);
 		template = templates.getTemplates().get(0);
 		childs = new ArrayList<Child>();
+	}
+	
+	public void save() {
+		// TODO implement new saveLogic
+	}
+	
+	public void load() {
+		// TODO implement new loadLogic
+	}
+	
+	public void export() {
+		// TODO implement old saveLogic
 	}
 	
 	/*
@@ -49,11 +62,6 @@ public class VehicleModel extends Model {
 		this.childs = childs;
 		setChanged();
 	}
-	
-	public void addChild(Child c) {
-		this.childs.add(c);
-		setChanged();
-	}
 
 	public Template getTemplate() {
 		return template;
@@ -61,5 +69,13 @@ public class VehicleModel extends Model {
 
 	public void setTemplate(Template template) {
 		this.template = template;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

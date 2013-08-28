@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
-import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.items.*;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.views.VehicleSetupView;
@@ -33,8 +32,6 @@ public class VehicleSetupController extends Controller implements ActionListener
 		this.vehicleModel.addObserver(this);
 		
 		this.setupView = new VehicleSetupView(this);
-		
-		VBLauncher.getInstance().getFrame().add(this.setupView);
 	}
 
 	@Override
@@ -65,18 +62,22 @@ public class VehicleSetupController extends Controller implements ActionListener
 			setupView.getSelectorStructure().setSelectedItem(vm.getStructure());
 			setupView.getSelectorTemplate().setSelectedItem(vm.getTemplate());
 		}
-		
-		System.out.println("Test");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 			case "addChild":
-				vehicleModel.addChild((Child) setupView.getSelectorChild().getSelectedItem());
-				vehicleModel.notifyObservers();
+				vehicleModel.getChilds().add(((Child) setupView.getSelectorChild().getSelectedItem()).clone());
+				vehicleModel.notifyObservers(true);
 				break;
 		}
 	}
 
+	/*
+	 * Getter & Setter
+	 */
+	public VehicleSetupView getVehicleSetupView() {
+		return setupView;
+	}
 }

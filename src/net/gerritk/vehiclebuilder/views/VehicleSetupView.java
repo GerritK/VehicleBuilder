@@ -23,12 +23,10 @@ public class VehicleSetupView extends View {
 		super(controller);
 		
 		setLayout(new FormLayout(new ColumnSpec[] {
-				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,
 				FormFactory.RELATED_GAP_COLSPEC,
 				ColumnSpec.decode("default:grow"),},
 			new RowSpec[] {
-				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,
@@ -41,36 +39,36 @@ public class VehicleSetupView extends View {
 		
 		// Cabin
 		JLabel lblCabin = new JLabel("Kabine");
-		add(lblCabin, "2, 2, right, default");
+		add(lblCabin, "1, 1, right, default");
 		
 		selectorCabin = new JComboBox<Cabin>();
-		add(selectorCabin, "4, 2, fill, default");
+		add(selectorCabin, "3, 1, fill, default");
 		
 		// Structure
 		JLabel lblStructure = new JLabel("Aufbau");
-		add(lblStructure, "2, 4, right, default");
+		add(lblStructure, "1, 3, right, default");
 		
 		selectorStructure = new JComboBox<Structure>();
-		add(selectorStructure, "4, 4, fill, default");
+		add(selectorStructure, "3, 3, fill, default");
 		
 		// Template
 		JLabel lblTemplate = new JLabel("Template");
-		add(lblTemplate, "2, 6, right, default");
+		add(lblTemplate, "1, 5, right, default");
 		
 		selectorTemplate = new JComboBox<Template>();
-		add(selectorTemplate, "4, 6, fill, default");
+		add(selectorTemplate, "3, 5, fill, default");
 		
 		// Child
 		JLabel lblChild = new JLabel("Zusatz");
-		add(lblChild, "2, 8, right, default");
+		add(lblChild, "1, 7, right, default");
 		
 		selectorChild = new JComboBox<Child>();
-		add(selectorChild, "4, 8, fill, default");
+		add(selectorChild, "3, 7, fill, default");
 		
 		JButton btnAddChild = new JButton("Hinzuf\u00FCgen");
 		btnAddChild.setActionCommand("addChild");
 		btnAddChild.addActionListener((ActionListener) controller);
-		add(btnAddChild, "4, 10");
+		add(btnAddChild, "3, 9");
 	}
 	
 	/*

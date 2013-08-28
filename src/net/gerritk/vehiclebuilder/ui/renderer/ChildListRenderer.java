@@ -11,7 +11,6 @@ import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 
 public class ChildListRenderer implements ListCellRenderer<Child> {
-
 	@Override
 	public Component getListCellRendererComponent(JList<? extends Child> list,
 			Child value, int index, boolean selected, boolean focus) {
@@ -53,5 +52,4 @@ public class ChildListRenderer implements ListCellRenderer<Child> {
 		
 		return panel;
 	}
-
 }

@@ -9,6 +9,9 @@ import javax.swing.JMenuBar;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import net.gerritk.vehiclebuilder.controllers.VehicleBuilderController;
+import net.gerritk.vehiclebuilder.controllers.VehicleChildController;
+import net.gerritk.vehiclebuilder.controllers.VehicleOutputController;
 import net.gerritk.vehiclebuilder.controllers.VehicleSetupController;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.resources.ResourceLoader;
@@ -43,8 +46,20 @@ public class VBLauncher {
 		TemplateModel templateModel = new TemplateModel();
 		ChildModel childModel = new ChildModel();
 		VehicleModel vehicleModel = new VehicleModel(cabinModel, structureModel, templateModel);
+		OutputModel outputModel = new OutputModel();
 		
-		VehicleSetupController vehicleSetupController = new VehicleSetupController(cabinModel, structureModel, templateModel, childModel, vehicleModel);
+		VehicleSetupController vsetupController = new VehicleSetupController(cabinModel, structureModel, 
+				templateModel, childModel, vehicleModel);
+		
+		VehicleChildController vchildController = new VehicleChildController(vehicleModel);
+		
+		VehicleOutputController voutputController = new VehicleOutputController(vehicleModel, outputModel);
+		
+		VehicleBuilderController vbuilderController = new VehicleBuilderController(vehicleModel,
+				vsetupController.getVehicleSetupView(), vchildController.getVehicleChildView(),
+				voutputController.getVehicleOutputView());
+		
+		frame.add(vbuilderController.getVehicleBuilderView());
 		
 		// Notify ALL
 		cabinModel.notifyObservers();
@@ -52,11 +67,13 @@ public class VBLauncher {
 		templateModel.notifyObservers();
 		childModel.notifyObservers();
 		vehicleModel.notifyObservers();
-		
-		setFrameToScreenCenter();
+		outputModel.notifyObservers();
 		
 		frame.pack();
 		frame.setMinimumSize(frame.getSize());
+
+		setFrameToScreenCenter();
+		
 		frame.setVisible(true);
 	}
 	
