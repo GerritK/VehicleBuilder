@@ -1,10 +1,12 @@
 package net.gerritk.vehiclebuilder.views;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
+
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -42,6 +44,7 @@ public class VehicleSetupView extends View {
 		add(lblCabin, "1, 1, right, default");
 		
 		selectorCabin = new JComboBox<Cabin>();
+		selectorCabin.addItemListener((ItemListener) controller);
 		add(selectorCabin, "3, 1, fill, default");
 		
 		// Structure
@@ -49,6 +52,7 @@ public class VehicleSetupView extends View {
 		add(lblStructure, "1, 3, right, default");
 		
 		selectorStructure = new JComboBox<Structure>();
+		selectorStructure.addItemListener((ItemListener) controller);
 		add(selectorStructure, "3, 3, fill, default");
 		
 		// Template
@@ -56,6 +60,7 @@ public class VehicleSetupView extends View {
 		add(lblTemplate, "1, 5, right, default");
 		
 		selectorTemplate = new JComboBox<Template>();
+		selectorTemplate.addItemListener((ItemListener) controller);
 		add(selectorTemplate, "3, 5, fill, default");
 		
 		// Child

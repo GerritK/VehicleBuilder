@@ -8,6 +8,7 @@ public class OutputModel extends Model {
 	private Color background;
 	private float scale;
 	private Child selectedChild;
+	private boolean bluelight;
 	
 	public OutputModel() {
 		background = new Color(255, 255, 255);
@@ -44,5 +45,13 @@ public class OutputModel extends Model {
 	public void setSelectedChild(Child selectedChild) {
 		this.selectedChild = selectedChild;
 		setChanged();
+	}
+
+	public boolean isBluelight() {
+		return bluelight;
+	}
+
+	public void setBluelight(boolean bluelight) {
+		this.bluelight = bluelight;
 	}
 }

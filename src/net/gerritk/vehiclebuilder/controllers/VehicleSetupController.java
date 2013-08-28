@@ -2,13 +2,15 @@ package net.gerritk.vehiclebuilder.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Observable;
 
 import net.gerritk.vehiclebuilder.items.*;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.views.VehicleSetupView;
 
-public class VehicleSetupController extends Controller implements ActionListener {
+public class VehicleSetupController extends Controller implements ActionListener, ItemListener {
 	private CabinModel cabinModel;
 	private StructureModel structureModel;
 	private TemplateModel templateModel;
@@ -71,6 +73,24 @@ public class VehicleSetupController extends Controller implements ActionListener
 				vehicleModel.getChilds().add(((Child) setupView.getSelectorChild().getSelectedItem()).clone());
 				vehicleModel.notifyObservers(true);
 				break;
+		}
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		if(e.getStateChange() == ItemEvent.SELECTED) {
+			Item i = (Item) e.getItem();
+			
+			if(i instanceof Cabin) {
+				Cabin c = (Cabin) i;
+				vehicleModel.setCabin(c);
+			} else if(i instanceof Structure) {
+				Structure s = (Structure) i;
+				vehicleModel.setStructure(s);
+			} else if(i instanceof Template) {
+				Template t = (Template) i;
+				vehicleModel.setTemplate(t);
+			}
 		}
 	}
 
