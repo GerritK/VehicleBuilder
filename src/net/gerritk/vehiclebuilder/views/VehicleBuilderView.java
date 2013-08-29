@@ -90,11 +90,13 @@ public class VehicleBuilderView extends View {
 		JMenuItem mntmSave = new JMenuItem("Speichern");
 		mntmSave.setActionCommand("save");
 		mntmSave.addActionListener((ActionListener) controller);
+		mntmSave.setEnabled(false);
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmLoad = new JMenuItem("Laden");
-		mntmLoad.setActionCommand("save");
+		mntmLoad.setActionCommand("load");
 		mntmLoad.addActionListener((ActionListener) controller);
+		mntmLoad.setEnabled(false);
 		mnFile.add(mntmLoad);
 
 		mnFile.addSeparator();

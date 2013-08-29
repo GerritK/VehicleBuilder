@@ -14,6 +14,7 @@ import net.gerritk.vehiclebuilder.controllers.VehicleOutputController;
 import net.gerritk.vehiclebuilder.controllers.VehicleSetupController;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.resources.ResourceLoader;
+import net.gerritk.vehiclebuilder.ui.dialogs.BuilderConfirmDialog;
 
 public class VBLauncher {
 	public static String VERSION = "0.3";
@@ -77,6 +78,14 @@ public class VBLauncher {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Point wp = new Point((int) (screenSize.getWidth() - frame.getWidth()) / 2, (int) (screenSize.getHeight() - frame.getHeight()) / 2);
 		frame.setLocation(wp);
+	}
+	
+	public void quit() {
+		BuilderConfirmDialog sure = new BuilderConfirmDialog(frame, "Beenden", "Wollen Sie das Programm wirklich beenden?");
+		sure.setVisible(true);
+		if(sure.isConfirmed()) {
+			frame.dispose();
+		}
 	}
 	
 	/*

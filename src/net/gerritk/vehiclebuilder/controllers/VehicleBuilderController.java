@@ -48,7 +48,9 @@ public class VehicleBuilderController extends Controller implements ActionListen
 				BuilderAboutDialog dialog = new BuilderAboutDialog(VBLauncher.getInstance().getFrame());
 				dialog.setVisible(true);
 				break;
-				
+			case "quit":
+				VBLauncher.getInstance().quit();
+				break;
 		}
 	}
 	

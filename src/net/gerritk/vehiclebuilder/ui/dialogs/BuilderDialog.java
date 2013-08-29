@@ -9,8 +9,12 @@ import javax.swing.JDialog;
 public abstract class BuilderDialog extends JDialog {
 	private static final long serialVersionUID = 1059329209445145521L;
 
+	public BuilderDialog(Frame frame, String title, boolean modal) {
+		super(frame, title, modal);
+	}
+	
 	public BuilderDialog(Frame frame, String title) {
-		super(frame, title);
+		this(frame, title, false);
 	}
 	
 	@Override
