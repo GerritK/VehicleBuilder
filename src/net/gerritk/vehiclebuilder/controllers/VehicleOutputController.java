@@ -60,6 +60,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 		
 		BufferedImage output = outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight()));
 		outputView.setOutput(output);
+		
+		outputView.setSelection(outputModel.generateSelectionBorder(vehicleModel));
 	}
 
 	@Override

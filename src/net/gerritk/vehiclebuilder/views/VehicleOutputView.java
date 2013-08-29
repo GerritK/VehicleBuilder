@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyListener;
@@ -16,6 +17,7 @@ import net.gerritk.vehiclebuilder.resources.IconSet;
 
 import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
+import javax.swing.UIManager;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeListener;
 
@@ -34,6 +36,7 @@ public class VehicleOutputView extends View {
 	private JLabel lblScale;
 	private JButton btnBluelight;
 	private BufferedImage output;
+	private Rectangle selection;
 
 	public VehicleOutputView(Controller controller) {
 		super(controller);
@@ -90,6 +93,10 @@ public class VehicleOutputView extends View {
 			int y = this.getHeight() / 2 - output.getHeight() / 2;
 			
 			g.drawImage(output, x, y, null);
+			g.setColor(UIManager.getColor("TextField.inactiveForeground"));
+			if(selection != null) {
+				g.drawRect(selection.x + x, selection.y + y, selection.width, selection.height);
+			}
 		}
 	}
 	
@@ -125,5 +132,14 @@ public class VehicleOutputView extends View {
 	
 	public JButton getBtnBluelight() {
 		return btnBluelight;
+	}
+
+	public Rectangle getSelection() {
+		return selection;
+	}
+
+	public void setSelection(Rectangle selection) {
+		this.selection = selection;
+		repaint();
 	}
 }
