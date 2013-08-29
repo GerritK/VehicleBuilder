@@ -2,8 +2,10 @@ package net.gerritk.vehiclebuilder.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.resources.IconSet;
@@ -26,8 +28,8 @@ public class VehicleOutputView extends View {
 	
 	private JSlider slColors[];
 	private JLabel lblScale;
-	private JLabel lblOutput;
 	private JButton btnBluelight;
+	private BufferedImage output;
 
 	public VehicleOutputView(Controller controller) {
 		super(controller);
@@ -51,9 +53,6 @@ public class VehicleOutputView extends View {
 		btnBluelight.addActionListener((ActionListener) controller);
 		add(btnBluelight, "1, 5");
 		
-		lblOutput = new JLabel();
-		add(lblOutput, "1, 3, 5, 1, center, center");
-		
 		lblScale = new JLabel();
 		add(lblScale, "5, 1, default, top");
 		
@@ -72,6 +71,19 @@ public class VehicleOutputView extends View {
 		slColors[2].setName("blue");
 		slColors[2].setBackground(Color.BLUE);
 		
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		
+		if(output != null) {
+			int x = this.getWidth() / 2 - output.getWidth() / 2;
+			int y = this.getHeight() / 2 - output.getHeight() / 2;
+			
+			g.drawImage(output, x, y, null);
+			System.out.println(output);
+		}
 	}
 	
 	public void showPopupMenu(Point p) {
@@ -95,8 +107,13 @@ public class VehicleOutputView extends View {
 		return lblScale;
 	}
 	
-	public JLabel getLblOutput() {
-		return lblOutput;
+	public BufferedImage getOutput() {
+		return output;
+	}
+	
+	public void setOutput(BufferedImage output) {
+		this.output = output;
+		repaint();
 	}
 	
 	public JButton getBtnBluelight() {

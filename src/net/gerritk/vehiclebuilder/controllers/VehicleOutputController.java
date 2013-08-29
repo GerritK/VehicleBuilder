@@ -11,11 +11,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -63,8 +63,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 			}
 		}
 		
-		ImageIcon icon = new ImageIcon(outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight())));
-		outputView.getLblOutput().setIcon(icon);
+		BufferedImage output = outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight()));
+		outputView.setOutput(output);
 	}
 
 	@Override

@@ -56,8 +56,6 @@ public class VBLauncher {
 		
 		frame.add(vbuilderController.getVehicleBuilderView());
 		
-		outputModel.setScale(10);
-		
 		// Notify ALL
 		cabinModel.notifyObservers();
 		structureModel.notifyObservers();
@@ -68,9 +66,6 @@ public class VBLauncher {
 		
 		frame.pack();
 		frame.setMinimumSize(frame.getSize());
-
-		outputModel.setScale(5);
-		outputModel.notifyObservers();
 
 		setFrameToScreenCenter();
 		

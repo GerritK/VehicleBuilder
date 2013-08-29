@@ -14,7 +14,7 @@ public class OutputModel extends Model {
 	
 	public OutputModel() {
 		background = Color.LIGHT_GRAY;
-		scale = 1.0f;
+		scale = 5.0f;
 	}
 	
 	public BufferedImage scaleImage(BufferedImage img) {
