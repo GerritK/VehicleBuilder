@@ -26,14 +26,14 @@ public class VehicleSetupController extends Controller implements ActionListener
 		this.templateModel = templateModel;
 		this.childModel = childModel;
 		this.vehicleModel = vehicleModel;
+
+		this.setupView = new VehicleSetupView(this);
 		
 		this.cabinModel.addObserver(this);
 		this.structureModel.addObserver(this);
 		this.templateModel.addObserver(this);
 		this.childModel.addObserver(this);
 		this.vehicleModel.addObserver(this);
-		
-		this.setupView = new VehicleSetupView(this);
 	}
 
 	@Override

@@ -40,11 +40,6 @@ public class VehicleOutputController extends Controller implements MouseListener
 		
 		this.vehicleModel.addObserver(this);
 		this.outputModel.addObserver(this);
-		
-		this.outputView.addMouseListener(this);
-		this.outputView.addMouseWheelListener(this);
-		this.outputView.addFocusListener(this);
-		this.outputView.addKeyListener(this);
 	}
 	
 	@Override

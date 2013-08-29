@@ -32,11 +32,6 @@ public class VehicleChildController extends Controller implements ActionListener
 		
 		this.vehicleModel.addObserver(this);
 		this.outputModel.addObserver(this);
-		
-		this.childView.getList().addMouseListener(this);
-		this.childView.getList().addMouseMotionListener(this);
-		this.childView.getList().addListSelectionListener(this);
-		this.childView.getList().setModel(new DefaultListModel<Child>());
 	}
 	
 	@Override

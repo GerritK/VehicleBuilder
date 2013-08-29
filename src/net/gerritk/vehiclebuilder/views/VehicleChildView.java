@@ -2,6 +2,8 @@ package net.gerritk.vehiclebuilder.views;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.items.Child;
@@ -14,11 +16,13 @@ import com.jgoodies.forms.layout.RowSpec;
 import com.jgoodies.forms.factories.FormFactory;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.JButton;
+import javax.swing.event.ListSelectionListener;
 
 public class VehicleChildView extends View {
 	private static final long serialVersionUID = -6297154211130256951L;
@@ -49,7 +53,11 @@ public class VehicleChildView extends View {
 				FormFactory.DEFAULT_ROWSPEC,}));
 		
 		list = new JList<Child>();
+		list.addMouseListener((MouseListener) controller);
+		list.addMouseMotionListener((MouseMotionListener) controller);
+		list.addListSelectionListener((ListSelectionListener) controller);
 		list.setCellRenderer(new ChildListRenderer());
+		list.setModel(new DefaultListModel<Child>());
 		
 		JScrollPane scrollPane = new JScrollPane(list, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(BorderFactory.createEtchedBorder());

@@ -5,6 +5,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
 import net.gerritk.vehiclebuilder.controllers.Controller;
@@ -71,6 +75,10 @@ public class VehicleOutputView extends View {
 		slColors[2].setName("blue");
 		slColors[2].setBackground(Color.BLUE);
 		
+		this.addMouseListener((MouseListener) controller);
+		this.addMouseWheelListener((MouseWheelListener) controller);
+		this.addFocusListener((FocusListener) controller);
+		this.addKeyListener((KeyListener) controller);
 	}
 	
 	@Override
