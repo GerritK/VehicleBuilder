@@ -7,7 +7,9 @@ import java.util.Observable;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.models.*;
+import net.gerritk.vehiclebuilder.ui.dialogs.BuilderAboutDialog;
 import net.gerritk.vehiclebuilder.views.*;
 
 public class VehicleBuilderController extends Controller implements ActionListener {
@@ -37,11 +39,16 @@ public class VehicleBuilderController extends Controller implements ActionListen
 				
 				JLabel lblMessage = new JLabel("Exportiervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.", JLabel.CENTER);
 				if(vehicleModel.export()) {
-					lblMessage.setText("Exportiervorgange war erfolgreich.");
+					lblMessage.setText("Exportiervorgang war erfolgreich.");
 				}
 				JOptionPane.showMessageDialog(builderView, lblMessage, "Exportiervorgang", JOptionPane.PLAIN_MESSAGE);
 				
 				break;
+			case "about":
+				BuilderAboutDialog dialog = new BuilderAboutDialog(VBLauncher.getInstance().getFrame());
+				dialog.setVisible(true);
+				break;
+				
 		}
 	}
 	

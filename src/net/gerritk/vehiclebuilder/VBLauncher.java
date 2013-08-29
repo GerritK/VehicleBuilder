@@ -16,6 +16,8 @@ import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.resources.ResourceLoader;
 
 public class VBLauncher {
+	public static String VERSION = "0.3";
+	
 	private static VBLauncher instance;
 	
 	private JFrame frame;
@@ -35,7 +37,6 @@ public class VBLauncher {
 		frame = new JFrame("Vehicle Builder für Leitstellenspiel.de");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		// TODO add Controllers, Models & Views
 		CabinModel cabinModel = new CabinModel();
 		StructureModel structureModel = new StructureModel();
 		TemplateModel templateModel = new TemplateModel();
