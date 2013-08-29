@@ -4,8 +4,6 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import net.gerritk.vehiclebuilder.VehicleBuilder;
-
 public class Child extends Item implements Cloneable {
 
 	private int x;
@@ -34,7 +32,6 @@ public class Child extends Item implements Cloneable {
 
 	public void setX(int x) {
 		this.x = x;
-		VehicleBuilder.getInstance().onChildsChange();
 	}
 
 	public int getY() {
@@ -43,7 +40,6 @@ public class Child extends Item implements Cloneable {
 
 	public void setY(int y) {
 		this.y = y;
-		VehicleBuilder.getInstance().onChildsChange();
 	}
 
 	public boolean isBehind() {

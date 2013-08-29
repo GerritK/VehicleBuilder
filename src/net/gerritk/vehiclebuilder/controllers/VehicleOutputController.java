@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
@@ -19,12 +21,13 @@ import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.models.OutputModel;
 import net.gerritk.vehiclebuilder.models.VehicleModel;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleOutputView;
 
-public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, ChangeListener, ActionListener, FocusListener {
+public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, ChangeListener, ActionListener, FocusListener, KeyListener {
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
 	private VehicleOutputView outputView;
@@ -41,6 +44,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 		this.outputView.addMouseListener(this);
 		this.outputView.addMouseWheelListener(this);
 		this.outputView.addFocusListener(this);
+		this.outputView.addKeyListener(this);
 	}
 	
 	@Override
@@ -129,6 +133,39 @@ public class VehicleOutputController extends Controller implements MouseListener
 			outputModel.setBluelight(!outputModel.isBluelight());
 			outputModel.notifyObservers();
 		}
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Child child = outputModel.getSelectedChild();
+		
+		if(child != null) {
+			if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+				child.setX(child.getX() + 1);
+			}
+			if(e.getKeyCode() == KeyEvent.VK_LEFT) {
+				child.setX(child.getX() - 1);
+			}
+			if(e.getKeyCode() == KeyEvent.VK_UP) {
+				child.setY(child.getY() - 1);
+			}
+			if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+				child.setY(child.getY() + 1);
+			}
+			outputModel.notifyObservers(true);
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_B) {
+			outputModel.setBluelight(!outputModel.isBluelight());
+			outputModel.notifyObservers();
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
 	}
 	
 	@Override

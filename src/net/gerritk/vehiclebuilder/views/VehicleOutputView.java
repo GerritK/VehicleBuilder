@@ -49,10 +49,10 @@ public class VehicleOutputView extends View {
 		btnBluelight.setOpaque(false);
 		btnBluelight.setActionCommand("bluelight");
 		btnBluelight.addActionListener((ActionListener) controller);
+		add(btnBluelight, "1, 5");
 		
 		lblOutput = new JLabel();
 		add(lblOutput, "1, 3, 5, 1, center, center");
-		add(btnBluelight, "1, 5");
 		
 		lblScale = new JLabel();
 		add(lblScale, "5, 1, default, top");
