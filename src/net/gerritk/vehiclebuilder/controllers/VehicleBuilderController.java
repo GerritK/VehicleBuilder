@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.views.*;
 
@@ -32,11 +35,12 @@ public class VehicleBuilderController extends Controller implements ActionListen
 			case "export":
 				vehicleModel.setName(builderView.getTxtName().getText());
 				
+				JLabel lblMessage = new JLabel("Exportiervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.", JLabel.CENTER);
 				if(vehicleModel.export()) {
-					System.out.println("export true");
-				} else {
-					System.out.println("export false");
+					lblMessage.setText("Exportiervorgange war erfolgreich.");
 				}
+				JOptionPane.showMessageDialog(builderView, lblMessage, "Exportiervorgang", JOptionPane.PLAIN_MESSAGE);
+				
 				break;
 		}
 	}
