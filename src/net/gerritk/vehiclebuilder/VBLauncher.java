@@ -69,6 +69,9 @@ public class VBLauncher {
 		frame.pack();
 		frame.setMinimumSize(frame.getSize());
 
+		outputModel.setScale(5);
+		outputModel.notifyObservers();
+
 		setFrameToScreenCenter();
 		
 		frame.setVisible(true);

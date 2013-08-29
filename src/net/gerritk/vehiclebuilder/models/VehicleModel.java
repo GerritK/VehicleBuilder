@@ -66,12 +66,18 @@ public class VehicleModel extends Model {
 	}
 	
 	public BufferedImage generateOutput(boolean bluelight) {
-		BufferedImage out;
-		if(generateTemplate() != null) {
-			out = generateTemplate();
+		BufferedImage out = generateTemplate();
+		if(out != null) {
+			BufferedImage outVehicle = generateVehicle(bluelight);
 			Graphics2D g = out.createGraphics();
 			
-			g.drawImage(generateVehicle(bluelight), 0, 0, null);
+			int border = template.getBorder();
+			int bottomBorder = border;
+			if(template.getExtra() != null) {
+				bottomBorder = template.getExtra().getHeight();
+			}
+			
+			g.drawImage(outVehicle, border, out.getHeight() - bottomBorder - outVehicle.getHeight(), null);
 		} else {
 			out = generateVehicle(bluelight);
 		}
@@ -219,7 +225,7 @@ public class VehicleModel extends Model {
 	
 	private void drawCabin(Graphics2D g, Dimension d, Point p) {
 		if(cabin != null) {
-			g.drawImage(cabin.getImage(), p.x, cabin.getHeight() - cabin.getHeight() - p.y, null);
+			g.drawImage(cabin.getImage(), p.x, (int) d.getHeight() - cabin.getHeight() - p.y, null);
 			p.x += cabin.getWidth();
 		}
 	}
@@ -267,6 +273,7 @@ public class VehicleModel extends Model {
 
 	public void setTemplate(Template template) {
 		this.template = template;
+		setChanged();
 	}
 
 	public String getName() {
