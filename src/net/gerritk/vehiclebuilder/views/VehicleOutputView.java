@@ -90,7 +90,6 @@ public class VehicleOutputView extends View {
 			int y = this.getHeight() / 2 - output.getHeight() / 2;
 			
 			g.drawImage(output, x, y, null);
-			System.out.println(output);
 		}
 	}
 	
