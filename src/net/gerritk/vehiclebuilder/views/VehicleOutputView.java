@@ -26,6 +26,7 @@ public class VehicleOutputView extends View {
 	
 	private JSlider slColors[];
 	private JLabel lblScale;
+	private JLabel lblOutput;
 	private JButton btnBluelight;
 
 	public VehicleOutputView(Controller controller) {
@@ -38,6 +39,8 @@ public class VehicleOutputView extends View {
 				FormFactory.RELATED_GAP_COLSPEC,
 				FormFactory.DEFAULT_COLSPEC,},
 			new RowSpec[] {
+				FormFactory.DEFAULT_ROWSPEC,
+				FormFactory.RELATED_GAP_ROWSPEC,
 				RowSpec.decode("default:grow"),
 				FormFactory.RELATED_GAP_ROWSPEC,
 				FormFactory.DEFAULT_ROWSPEC,}));
@@ -46,7 +49,10 @@ public class VehicleOutputView extends View {
 		btnBluelight.setOpaque(false);
 		btnBluelight.setActionCommand("bluelight");
 		btnBluelight.addActionListener((ActionListener) controller);
-		add(btnBluelight, "1, 3");
+		
+		lblOutput = new JLabel();
+		add(lblOutput, "1, 3, 5, 1, center, center");
+		add(btnBluelight, "1, 5");
 		
 		lblScale = new JLabel();
 		add(lblScale, "5, 1, default, top");
@@ -65,6 +71,7 @@ public class VehicleOutputView extends View {
 		slColors[1].setBackground(Color.GREEN);
 		slColors[2].setName("blue");
 		slColors[2].setBackground(Color.BLUE);
+		
 	}
 	
 	public void showPopupMenu(Point p) {
@@ -83,9 +90,15 @@ public class VehicleOutputView extends View {
 	public JSlider[] getSliders() {
 		return slColors;
 	}
+	
 	public JLabel getLblScale() {
 		return lblScale;
 	}
+	
+	public JLabel getLblOutput() {
+		return lblOutput;
+	}
+	
 	public JButton getBtnBluelight() {
 		return btnBluelight;
 	}

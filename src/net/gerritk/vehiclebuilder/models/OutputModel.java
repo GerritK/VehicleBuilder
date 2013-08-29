@@ -1,6 +1,8 @@
 package net.gerritk.vehiclebuilder.models;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
 import net.gerritk.vehiclebuilder.items.Child;
 
@@ -13,6 +15,16 @@ public class OutputModel extends Model {
 	public OutputModel() {
 		background = Color.LIGHT_GRAY;
 		scale = 1.0f;
+	}
+	
+	public BufferedImage scaleImage(BufferedImage img) {
+		BufferedImage scaled = new BufferedImage((int) (img.getWidth() * scale), (int) (img.getHeight() * scale), BufferedImage.TRANSLUCENT);
+		Graphics2D g = scaled.createGraphics();
+		
+		g.scale(scale, scale);
+		g.drawImage(img, 0, 0, null);
+		
+		return scaled;
 	}
 	
 	/*

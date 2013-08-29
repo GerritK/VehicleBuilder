@@ -29,9 +29,14 @@ public class VehicleBuilderController extends Controller implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
-			case "exportVehicle":
-				vehicleModel.setName(builderView.getName());
-				vehicleModel.export();
+			case "export":
+				vehicleModel.setName(builderView.getTxtName().getText());
+				
+				if(vehicleModel.export()) {
+					System.out.println("export true");
+				} else {
+					System.out.println("export false");
+				}
 				break;
 		}
 	}

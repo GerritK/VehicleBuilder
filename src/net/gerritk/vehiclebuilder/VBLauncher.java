@@ -56,6 +56,8 @@ public class VBLauncher {
 		
 		frame.add(vbuilderController.getVehicleBuilderView());
 		
+		outputModel.setScale(10);
+		
 		// Notify ALL
 		cabinModel.notifyObservers();
 		structureModel.notifyObservers();

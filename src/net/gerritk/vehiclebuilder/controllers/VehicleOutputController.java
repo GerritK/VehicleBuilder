@@ -13,6 +13,7 @@ import java.text.DecimalFormat;
 import java.util.Observable;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
@@ -44,7 +45,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o instanceof OutputModel) {
+		if(o == outputModel) {
 			outputView.setBackground(outputModel.getBackground());
 			outputView.getSliders()[0].setValue(outputModel.getBackground().getRed());
 			outputView.getSliders()[1].setValue(outputModel.getBackground().getGreen());
@@ -57,6 +58,9 @@ public class VehicleOutputController extends Controller implements MouseListener
 				outputView.getBtnBluelight().setIcon(IconSet.BLUELIGHT.DISABLED);
 			}
 		}
+		
+		ImageIcon icon = new ImageIcon(outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight())));
+		outputView.getLblOutput().setIcon(icon);
 	}
 
 	@Override

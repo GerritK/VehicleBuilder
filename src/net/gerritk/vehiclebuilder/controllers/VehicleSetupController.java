@@ -73,9 +73,6 @@ public class VehicleSetupController extends Controller implements ActionListener
 				vehicleModel.getChilds().add(((Child) setupView.getSelectorChild().getSelectedItem()).clone());
 				vehicleModel.notifyObservers(true);
 				break;
-			case "export":
-				vehicleModel.export();
-				break;
 		}
 	}
 
