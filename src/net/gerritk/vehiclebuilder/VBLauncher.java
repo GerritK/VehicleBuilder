@@ -3,6 +3,7 @@ package net.gerritk.vehiclebuilder;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -23,6 +24,7 @@ public class VBLauncher {
 	
 	private JFrame frame;
 	private ResourceLoader resourceLoader;
+	private ArrayList<Model> models = new ArrayList<Model>();
 	
 	private VBLauncher() {
 		instance = this;
@@ -44,6 +46,13 @@ public class VBLauncher {
 		ChildModel childModel = new ChildModel();
 		VehicleModel vehicleModel = new VehicleModel(cabinModel, structureModel, templateModel);
 		OutputModel outputModel = new OutputModel();
+		
+		models.add(cabinModel);
+		models.add(structureModel);
+		models.add(templateModel);
+		models.add(childModel);
+		models.add(vehicleModel);
+		models.add(outputModel);
 		
 		VehicleSetupController vsetupController = new VehicleSetupController(cabinModel, structureModel, 
 				templateModel, childModel, vehicleModel);
@@ -86,6 +95,16 @@ public class VBLauncher {
 		if(sure.isConfirmed()) {
 			frame.dispose();
 		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T extends Model> T getModel(Class<T> c) {
+		for(Model model : models) {
+			if(c.equals(model.getClass())) {
+				return (T) model;
+			}
+		}
+		return null;
 	}
 	
 	/*
