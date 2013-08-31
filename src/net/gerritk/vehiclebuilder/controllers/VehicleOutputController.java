@@ -1,6 +1,8 @@
 package net.gerritk.vehiclebuilder.controllers;
 
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -9,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
@@ -27,21 +30,22 @@ import net.gerritk.vehiclebuilder.models.VehicleModel;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleOutputView;
 
-public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, ChangeListener, ActionListener, FocusListener, KeyListener {
+public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, MouseMotionListener, ChangeListener, ActionListener, FocusListener,
+		KeyListener {
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
 	private VehicleOutputView outputView;
-	
+
 	public VehicleOutputController(VehicleModel vehicleModel, OutputModel outputModel) {
 		this.vehicleModel = vehicleModel;
 		this.outputModel = outputModel;
-		
+
 		this.outputView = new VehicleOutputView(this);
-		
+
 		this.vehicleModel.addObserver(this);
 		this.outputModel.addObserver(this);
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o == outputModel) {
@@ -50,24 +54,40 @@ public class VehicleOutputController extends Controller implements MouseListener
 			outputView.getSliders()[1].setValue(outputModel.getBackground().getGreen());
 			outputView.getSliders()[2].setValue(outputModel.getBackground().getBlue());
 			outputView.getLblScale().setText(new DecimalFormat("0.00").format(outputModel.getScale()) + " x");
-			
+
 			if(outputModel.isBluelight()) {
 				outputView.getBtnBluelight().setIcon(IconSet.BLUELIGHT);
 			} else {
 				outputView.getBtnBluelight().setIcon(IconSet.BLUELIGHT.DISABLED);
 			}
 		}
-		
+
 		BufferedImage output = outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight()));
 		outputView.setOutput(output);
-		
+
 		outputView.setSelection(outputModel.generateSelectionBorder(vehicleModel));
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		outputView.requestFocusInWindow();
-		
+
+		if(e.getButton() == MouseEvent.BUTTON1) {
+			int x = outputView.getWidth() / 2 - outputView.getOutput().getWidth() / 2;
+			int y = outputView.getHeight() / 2 - outputView.getOutput().getHeight() / 2;
+			for(Child c : vehicleModel.getChilds()) {
+				Rectangle selection = outputModel.generateSelectionBorder(vehicleModel, c);
+				selection.x += x;
+				selection.y += y;
+	
+				if(selection.contains(e.getPoint())) {
+					outputModel.setSelectedChild(c);
+					outputModel.notifyObservers();
+					break;
+				}
+			}
+		}
+
 		if(e.isPopupTrigger()) {
 			outputView.showPopupMenu(e.getPoint());
 		}
@@ -79,7 +99,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 			outputView.showPopupMenu(e.getPoint());
 		}
 	}
-	
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
@@ -91,16 +111,16 @@ public class VehicleOutputController extends Controller implements MouseListener
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-	
+
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		if(e.getSource() instanceof JSlider) {
 			JSlider slider = (JSlider) e.getSource();
-			
+
 			int r = outputModel.getBackground().getRed();
 			int g = outputModel.getBackground().getGreen();
 			int b = outputModel.getBackground().getBlue();
-			
+
 			switch(slider.getName()) {
 				case "red":
 					r = slider.getValue();
@@ -112,7 +132,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 					b = slider.getValue();
 					break;
 			}
-			
+
 			outputModel.setBackground(new Color(r, g, b));
 			outputModel.notifyObservers();
 		}
@@ -123,6 +143,29 @@ public class VehicleOutputController extends Controller implements MouseListener
 		outputModel.setScale(outputModel.getScale() + (float) -e.getWheelRotation() / 5);
 		outputModel.notifyObservers();
 	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		Child c = outputModel.getSelectedChild();
+		if(c != null) {
+			Point d = new Point((int) ((e.getPoint().x - mouse.x) / outputModel.getScale()), (int) ((e.getPoint().y - mouse.y) / outputModel.getScale()));
+			
+			c.setX(c.getX() + d.x);
+			c.setY(c.getY() + d.y);
+			
+			if(d.x != 0 || d.y != 0) {
+				mouse.setLocation(e.getPoint());
+			}
+			
+			outputModel.notifyObservers(true);
+		}
+	}
+	
+	private Point mouse = new Point();
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		mouse.setLocation(e.getPoint());
+	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -131,11 +174,11 @@ public class VehicleOutputController extends Controller implements MouseListener
 			outputModel.notifyObservers();
 		}
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		Child child = outputModel.getSelectedChild();
-		
+
 		if(child != null) {
 			if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 				child.setX(child.getX() + 1);
@@ -164,18 +207,17 @@ public class VehicleOutputController extends Controller implements MouseListener
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-	
+
 	@Override
 	public void focusGained(FocusEvent e) {
-		outputView.setBorder(BorderFactory.createEtchedBorder(UIManager.getColor("List.selectionForeground"),
-				UIManager.getColor("List.selectionBackground")));
+		outputView.setBorder(BorderFactory.createEtchedBorder(UIManager.getColor("List.selectionForeground"), UIManager.getColor("List.selectionBackground")));
 	}
 
 	@Override
 	public void focusLost(FocusEvent e) {
 		outputView.setBorder(BorderFactory.createEtchedBorder());
 	}
-	
+
 	/*
 	 * Getter & Setter
 	 */

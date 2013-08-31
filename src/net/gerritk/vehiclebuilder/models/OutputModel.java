@@ -30,6 +30,10 @@ public class OutputModel extends Model {
 	}
 	
 	public Rectangle generateSelectionBorder(VehicleModel vehicleModel) {
+		return this.generateSelectionBorder(vehicleModel, selectedChild);
+	}
+	
+	public Rectangle generateSelectionBorder(VehicleModel vehicleModel, Child selectedChild) {
 		Rectangle r = null;
 		
 		if(selectedChild != null) {
