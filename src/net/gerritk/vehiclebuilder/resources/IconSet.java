@@ -1,6 +1,9 @@
 package net.gerritk.vehiclebuilder.resources;
 
+import java.awt.Image;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
@@ -31,5 +34,20 @@ public class IconSet extends ImageIcon {
 		System.out.println("Load Icon \"" + icon + "\" successed.");
 		
 		DISABLED = new JLabel(this).getDisabledIcon();
+	}
+	
+	public static List<Image> loadIcons() {
+		List<Image> icons = new ArrayList<Image>();
+		
+		icons.add(new IconSet("icon/icon_256x256").getImage());
+		icons.add(new IconSet("icon/icon_128x128").getImage());
+		icons.add(new IconSet("icon/icon_96x96").getImage());
+		icons.add(new IconSet("icon/icon_64x64").getImage());
+		icons.add(new IconSet("icon/icon_48x48").getImage());
+		icons.add(new IconSet("icon/icon_32x32").getImage());
+		icons.add(new IconSet("icon/icon_24x24").getImage());
+		icons.add(new IconSet("icon/icon_16x16").getImage());
+		
+		return icons;
 	}
 }

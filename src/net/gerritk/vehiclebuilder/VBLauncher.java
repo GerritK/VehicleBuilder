@@ -14,6 +14,7 @@ import net.gerritk.vehiclebuilder.controllers.VehicleChildController;
 import net.gerritk.vehiclebuilder.controllers.VehicleOutputController;
 import net.gerritk.vehiclebuilder.controllers.VehicleSetupController;
 import net.gerritk.vehiclebuilder.models.*;
+import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.resources.ResourceLoader;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderConfirmDialog;
 
@@ -75,6 +76,7 @@ public class VBLauncher {
 		vehicleModel.notifyObservers();
 		outputModel.notifyObservers();
 		
+		frame.setIconImages(IconSet.loadIcons());
 		frame.pack();
 		frame.setMinimumSize(frame.getSize());
 
