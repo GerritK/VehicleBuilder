@@ -2,17 +2,22 @@ package net.gerritk.vehiclebuilder.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.Observable;
 
+import javax.swing.JFileChooser;
+
 import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.models.*;
+import net.gerritk.vehiclebuilder.resources.SaveFileFilter;
 import net.gerritk.vehiclebuilder.resources.VehicleBuilderSaveFile;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderAboutDialog;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderInfoDialog;
 import net.gerritk.vehiclebuilder.views.*;
 
-public class VehicleBuilderController extends Controller implements ActionListener {
+public class VehicleBuilderController extends Controller implements ActionListener, FocusListener {
 	private VehicleModel vehicleModel;
 	private VehicleBuilderView builderView;
 	
@@ -27,7 +32,7 @@ public class VehicleBuilderController extends Controller implements ActionListen
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o == vehicleModel) {
-			builderView.getTxtName().setText(vehicleModel.getStructure().getName());
+			builderView.getTxtName().setText(vehicleModel.getName());
 		}
 	}
 
@@ -46,25 +51,41 @@ public class VehicleBuilderController extends Controller implements ActionListen
 				
 				break;
 			case "save":
-				File f = new File("vehicle.save");
+				JFileChooser fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fc.setFileFilter(new SaveFileFilter());
+				fc.setSelectedFile(new File(vehicleModel.getName() + ".vbsf"));
+				int value = fc.showSaveDialog(builderView);
 				
-				infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
-						"Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
-				if(VehicleBuilderSaveFile.saveToFile(f, vehicleModel)) {
-					infoDialog.setInfo("Speichervorgang war erfolgreich.");
+				if(value == JFileChooser.APPROVE_OPTION) {
+					File f = fc.getSelectedFile();
+					
+					if(!VehicleBuilderSaveFile.saveToFile(f, vehicleModel)) {
+						infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
+								"Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
+						infoDialog.setVisible(true);
+					}
 				}
-				infoDialog.setVisible(true);
 				
 				break;
 			case "load":
-				f = new File("vehicle.save");
+				fc = new JFileChooser();
+				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fc.setSelectedFile(new File("vehicle.vbsf"));
+				fc.setFileFilter(new SaveFileFilter());
+				value = fc.showOpenDialog(builderView);
 				
-				infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
-						"Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
-				if(VehicleBuilderSaveFile.loadFromFile(f, vehicleModel)) {
-					infoDialog.setInfo("Ladevorgang war erfolgreich.");
+				if(value == JFileChooser.APPROVE_OPTION) {
+					File f = fc.getSelectedFile();
+					
+					if(VehicleBuilderSaveFile.loadFromFile(f, vehicleModel)) {
+						vehicleModel.notifyObservers();
+					} else {
+						infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
+								"Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
+						infoDialog.setVisible(true);
+					}
 				}
-				infoDialog.setVisible(true);
 				
 				break;
 			case "about":
@@ -75,6 +96,16 @@ public class VehicleBuilderController extends Controller implements ActionListen
 				VBLauncher.getInstance().quit();
 				break;
 		}
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		vehicleModel.setName(builderView.getTxtName().getText());
+		vehicleModel.notifyObservers();
 	}
 	
 	/*

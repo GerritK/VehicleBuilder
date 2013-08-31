@@ -28,6 +28,10 @@ public class VehicleBuilderSaveFile {
 	
 	private VehicleBuilderSaveFile(File f, VehicleModel vehicleModel) {
 		this.vehicleModel = vehicleModel;
+		if(!f.getName().endsWith(".vbsf")) {
+			f = new File(f.getAbsoluteFile() + ".vbsf");
+		}
+		
 		this.file = f;
 	}
 	
@@ -35,10 +39,10 @@ public class VehicleBuilderSaveFile {
 		try {
 			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
 			
-			writer.write("name='" + vehicleModel.getName() + "';");
-			writer.write("cabin='" + vehicleModel.getCabin().toString() + "';");
-			writer.write("structure='" + vehicleModel.getStructure().toString() + "';");
-			writer.write("template='" + vehicleModel.getTemplate().toString() + "';");
+			writer.write("name=" + vehicleModel.getName() + ";");
+			writer.write("cabin=" + vehicleModel.getCabin().toString() + ";");
+			writer.write("structure=" + vehicleModel.getStructure().toString() + ";");
+			writer.write("template=" + vehicleModel.getTemplate().toString() + ";");
 			writer.write("childs={");
 			for(Child child : vehicleModel.getChilds()) {
 				writer.write(child.toString() + "<" + child.getX() + "," + child.getY() + "," + child.getCustomName() + "," + child.isBehind() + ">#");
@@ -113,7 +117,7 @@ public class VehicleBuilderSaveFile {
 		CabinModel cabinModel = VBLauncher.getInstance().getModel(CabinModel.class);
 		
 		for(Cabin c : cabinModel.getCabins()) {
-			if(c.getName().equals(value.replace("'", ""))) {
+			if(c.getName().equals(value)) {
 				return c;
 			}
 		}
@@ -125,7 +129,7 @@ public class VehicleBuilderSaveFile {
 		StructureModel structureModel = VBLauncher.getInstance().getModel(StructureModel.class);
 
 		for(Structure s : structureModel.getStructures()) {
-			if(s.getName().equals(value.replace("'", ""))) {
+			if(s.getName().equals(value)) {
 				return s;
 			}
 		}
@@ -137,7 +141,7 @@ public class VehicleBuilderSaveFile {
 		TemplateModel templateModel = VBLauncher.getInstance().getModel(TemplateModel.class);
 
 		for(Template t : templateModel.getTemplates()) {
-			if(t.getName().equals(value.replace("'", ""))) {
+			if(t.getName().equals(value)) {
 				return t;
 			}
 		}
@@ -149,18 +153,19 @@ public class VehicleBuilderSaveFile {
 		ChildModel childModel = VBLauncher.getInstance().getModel(ChildModel.class);
 		ArrayList<Child> childs = new ArrayList<Child>();
 		
-		String values[] = value.replace("{", "").replace("#}", "").split("#");
+		String values[] = value.replace("{", "").replace("}", "").split("#");
 		for(String v : values) {
 			if(v.isEmpty()) continue;
 			
 			for(Child c : childModel.getChilds()) {
-				String name = v.split("<")[0];
+				String split[] = v.split("<");
+				String name = split[0];
 				String props = v.split("<")[1];
 				
 				int x = Integer.parseInt(props.split(",")[0]);
 				int y = Integer.parseInt(props.split(",")[1]);
 				String customName = props.split(",")[2];
-				boolean behind = Boolean.parseBoolean(props.split(",")[3]);
+				boolean behind = Boolean.parseBoolean(props.split(",")[3].replace(">", ""));
 				
 				if(customName.equals("null")) {
 					customName = null;

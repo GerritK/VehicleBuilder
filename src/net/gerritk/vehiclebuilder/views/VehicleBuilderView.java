@@ -1,6 +1,7 @@
 package net.gerritk.vehiclebuilder.views;
 
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 
 import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.controllers.Controller;
@@ -60,8 +61,8 @@ public class VehicleBuilderView extends View {
 		add(lblName, "4, 4, right, default");
 		
 		txtName = new JTextField();
+		txtName.addFocusListener((FocusListener) controller);
 		add(txtName, "6, 4, fill, default");
-		txtName.setColumns(10);
 		
 		// Views
 		add(setupView, "2, 8, fill, fill");

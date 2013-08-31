@@ -28,6 +28,7 @@ public class VehicleModel extends Model {
 		structure = structures.getStructures().get(0);
 		template = templates.getTemplates().get(0);
 		childs = new ArrayList<Child>();
+		name = structure.getName();
 	}
 	
 	public void save() {
@@ -282,5 +283,6 @@ public class VehicleModel extends Model {
 
 	public void setName(String name) {
 		this.name = name;
+		setChanged();
 	}
 }
