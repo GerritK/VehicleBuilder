@@ -5,13 +5,11 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Observable;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.resources.VehicleBuilderSaveFile;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderAboutDialog;
+import net.gerritk.vehiclebuilder.ui.dialogs.BuilderInfoDialog;
 import net.gerritk.vehiclebuilder.views.*;
 
 public class VehicleBuilderController extends Controller implements ActionListener {
@@ -39,37 +37,39 @@ public class VehicleBuilderController extends Controller implements ActionListen
 			case "export":
 				vehicleModel.setName(builderView.getTxtName().getText());
 				
-				JLabel lblMessage = new JLabel("Exportiervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.", JLabel.CENTER);
+				BuilderInfoDialog infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Exportiervorgang",
+						"Exportiervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
 				if(vehicleModel.export()) {
-					lblMessage.setText("Exportiervorgang war erfolgreich.");
+					infoDialog.setInfo("Exportiervorgang war erfolgreich.");
 				}
-				JOptionPane.showMessageDialog(builderView, lblMessage, "Exportiervorgang", JOptionPane.PLAIN_MESSAGE);
+				infoDialog.setVisible(true);
 				
 				break;
 			case "save":
 				File f = new File("vehicle.save");
 				
-				lblMessage = new JLabel("Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.", JLabel.CENTER);
+				infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
+						"Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
 				if(VehicleBuilderSaveFile.saveToFile(f, vehicleModel)) {
-					lblMessage.setText("Speichervorgang war erfolgreich.");
+					infoDialog.setInfo("Speichervorgang war erfolgreich.");
 				}
-				JOptionPane.showMessageDialog(builderView, lblMessage, "Speichervorgang", JOptionPane.PLAIN_MESSAGE);
+				infoDialog.setVisible(true);
 				
 				break;
 			case "load":
 				f = new File("vehicle.save");
 				
-				lblMessage = new JLabel("Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.", JLabel.CENTER);
+				infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
+						"Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
 				if(VehicleBuilderSaveFile.loadFromFile(f, vehicleModel)) {
-					lblMessage.setText("Ladevorgang war erfolgreich.");
-					vehicleModel.notifyObservers();
+					infoDialog.setInfo("Ladevorgang war erfolgreich.");
 				}
-				JOptionPane.showMessageDialog(builderView, lblMessage, "Ladevorgang", JOptionPane.PLAIN_MESSAGE);
+				infoDialog.setVisible(true);
 				
 				break;
 			case "about":
-				BuilderAboutDialog dialog = new BuilderAboutDialog(VBLauncher.getInstance().getFrame());
-				dialog.setVisible(true);
+				BuilderAboutDialog aboutDialog = new BuilderAboutDialog(VBLauncher.getInstance().getFrame());
+				aboutDialog.setVisible(true);
 				break;
 			case "quit":
 				VBLauncher.getInstance().quit();
