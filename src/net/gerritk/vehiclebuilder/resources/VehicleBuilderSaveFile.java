@@ -41,7 +41,7 @@ public class VehicleBuilderSaveFile {
 			writer.write("template='" + vehicleModel.getTemplate().toString() + "';");
 			writer.write("childs={");
 			for(Child child : vehicleModel.getChilds()) {
-				writer.write(child.toString() + "%" + child.getX() + "," + child.getY() + "," + child.getCustomName() + "," + child.isBehind() + "%#");
+				writer.write(child.toString() + "<" + child.getX() + "," + child.getY() + "," + child.getCustomName() + "," + child.isBehind() + ">#");
 			}
 			writer.write("}");
 			
@@ -154,8 +154,8 @@ public class VehicleBuilderSaveFile {
 			if(v.isEmpty()) continue;
 			
 			for(Child c : childModel.getChilds()) {
-				String name = v.split("%")[0];
-				String props = v.split("%")[1];
+				String name = v.split("<")[0];
+				String props = v.split("<")[1];
 				
 				int x = Integer.parseInt(props.split(",")[0]);
 				int y = Integer.parseInt(props.split(",")[1]);
