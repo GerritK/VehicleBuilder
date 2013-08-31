@@ -59,6 +59,7 @@ public class VehicleOutputView extends View {
 		btnBluelight.setOpaque(false);
 		btnBluelight.setActionCommand("bluelight");
 		btnBluelight.addActionListener((ActionListener) controller);
+		btnBluelight.setToolTipText("Blaulicht an- bzw. ausschalten");
 		add(btnBluelight, "1, 5");
 		
 		lblScale = new JLabel();

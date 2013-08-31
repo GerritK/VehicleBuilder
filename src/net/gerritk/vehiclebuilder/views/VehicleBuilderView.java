@@ -77,6 +77,7 @@ public class VehicleBuilderView extends View {
 		JButton btnExport = new JButton("Exportieren");
 		btnExport.setActionCommand("export");
 		btnExport.addActionListener((ActionListener) controller);
+		btnExport.setToolTipText("Das erstellte Fahrzeug als Grafik exportieren");
 		add(btnExport, "4, 12, 3, 1, center, default");
 	}
 	
@@ -90,11 +91,13 @@ public class VehicleBuilderView extends View {
 		JMenuItem mntmSave = new JMenuItem("Speichern");
 		mntmSave.setActionCommand("save");
 		mntmSave.addActionListener((ActionListener) controller);
+		mntmSave.setToolTipText("Das erstellte Fahrzeug als Projekt speichern");
 		mnFile.add(mntmSave);
 		
 		JMenuItem mntmLoad = new JMenuItem("Laden");
 		mntmLoad.setActionCommand("load");
 		mntmLoad.addActionListener((ActionListener) controller);
+		mntmLoad.setToolTipText("Ein erstelltes Fahrzeug als Projekt laden");
 		mnFile.add(mntmLoad);
 
 		mnFile.addSeparator();
@@ -102,6 +105,7 @@ public class VehicleBuilderView extends View {
 		JMenuItem mntmExport = new JMenuItem("Exportieren");
 		mntmExport.setActionCommand("export");
 		mntmExport.addActionListener((ActionListener) controller);
+		mntmExport.setToolTipText("Das erstellte Fahrzeug als Grafik exportieren");
 		mnFile.add(mntmExport);
 		
 		mnFile.addSeparator();
@@ -109,6 +113,7 @@ public class VehicleBuilderView extends View {
 		JMenuItem mntmQuit = new JMenuItem("Beenden");
 		mntmQuit.setActionCommand("quit");
 		mntmQuit.addActionListener((ActionListener) controller);
+		mntmQuit.setToolTipText("Das Programm beenden");
 		mnFile.add(mntmQuit);
 		
 		// Help Menu
@@ -118,6 +123,7 @@ public class VehicleBuilderView extends View {
 		JMenuItem mntmAbout = new JMenuItem("Über");
 		mntmAbout.setActionCommand("about");
 		mntmAbout.addActionListener((ActionListener) controller);
+		mntmAbout.setToolTipText("Informationen über das Programm anzeigen");
 		mnHelp.add(mntmAbout);
 
 		VBLauncher.getInstance().getFrame().setJMenuBar(menuBar);

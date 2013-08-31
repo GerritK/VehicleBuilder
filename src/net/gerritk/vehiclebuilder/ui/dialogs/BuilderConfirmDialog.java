@@ -36,11 +36,13 @@ public class BuilderConfirmDialog extends BuilderDialog implements ActionListene
 		JButton btnYes = new JButton("Ja");
 		btnYes.setActionCommand("yes");
 		btnYes.addActionListener(this);
+		btnYes.setToolTipText("Den Dialog bestätigen");
 		getContentPane().add(btnYes, "2, 4");
 		
 		JButton btnNo = new JButton("Nein");
 		btnNo.setActionCommand("no");
 		btnNo.addActionListener(this);
+		btnNo.setToolTipText("Den Dialog ablehnen");
 		getContentPane().add(btnNo, "4, 4");
 		
 		pack();

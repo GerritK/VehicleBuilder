@@ -39,6 +39,7 @@ public class BuilderInfoDialog extends BuilderDialog {
 				dispose();
 			}
 		});
+		btnOk.setToolTipText("Fenster schlieﬂen");
 		getContentPane().add(btnOk, "2, 4, center, default");
 		
 		pack();

@@ -45,6 +45,7 @@ public class VehicleSetupView extends View {
 		
 		selectorCabin = new JComboBox<Cabin>();
 		selectorCabin.addItemListener((ItemListener) controller);
+		selectorCabin.setToolTipText("Kabine auswählen");
 		add(selectorCabin, "3, 1, fill, default");
 		
 		// Structure
@@ -53,6 +54,7 @@ public class VehicleSetupView extends View {
 		
 		selectorStructure = new JComboBox<Structure>();
 		selectorStructure.addItemListener((ItemListener) controller);
+		selectorStructure.setToolTipText("Aufbau auswählen");
 		add(selectorStructure, "3, 3, fill, default");
 		
 		// Template
@@ -61,6 +63,7 @@ public class VehicleSetupView extends View {
 		
 		selectorTemplate = new JComboBox<Template>();
 		selectorTemplate.addItemListener((ItemListener) controller);
+		selectorTemplate.setToolTipText("Template auswählen");
 		add(selectorTemplate, "3, 5, fill, default");
 		
 		// Child
@@ -68,11 +71,13 @@ public class VehicleSetupView extends View {
 		add(lblChild, "1, 7, right, default");
 		
 		selectorChild = new JComboBox<Child>();
+		selectorChild.setToolTipText("Zusatz auswählen");
 		add(selectorChild, "3, 7, fill, default");
 		
 		JButton btnAddChild = new JButton("Hinzuf\u00FCgen");
 		btnAddChild.setActionCommand("addChild");
 		btnAddChild.addActionListener((ActionListener) controller);
+		btnAddChild.setToolTipText("Zusatz zur Liste hinzufügen");
 		add(btnAddChild, "3, 9");
 	}
 	

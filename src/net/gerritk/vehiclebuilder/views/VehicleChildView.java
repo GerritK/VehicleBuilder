@@ -66,34 +66,41 @@ public class VehicleChildView extends View {
 		btnUp = new JButton(IconSet.UP);
 		btnUp.setActionCommand("up");
 		btnUp.addActionListener((ActionListener) controller);
+		btnUp.setToolTipText("Zusatz nach oben sortieren");
 		add(btnUp, "5, 1");
 		
 		btnDown = new JButton(IconSet.DOWN);
 		btnDown.setActionCommand("down");
 		btnDown.addActionListener((ActionListener) controller);
+		btnDown.setToolTipText("Zusatz nach unten sortieren");
 		add(btnDown, "5, 3");
 		
 		btnDrawOrder = new JButton(IconSet.BEHIND);
 		btnDrawOrder.setActionCommand("drawOrder");
 		btnDrawOrder.addActionListener((ActionListener) controller);
+		btnDrawOrder.setToolTipText("Zusatz vor bzw. hinter dem Fahrzeug darstellen");
 		add(btnDrawOrder, "5, 5, default, top");
 		
 		btnClear = new JButton("Alle löschen");
 		btnClear.setActionCommand("clear");
 		btnClear.addActionListener((ActionListener) controller);
+		btnClear.setToolTipText("Alle Zusätze aus der Liste löschen");
 		add(btnClear, "1, 7");
 		
 		btnDelete = new JButton("Löschen");
 		btnDelete.setActionCommand("delete");
 		btnDelete.addActionListener((ActionListener) controller);
+		btnDelete.setToolTipText("Den gewählten Zusatz aus der Liste löschen");
 		add(btnDelete, "3, 7");
 		
 		miSetName = new JMenuItem("Namen festlegen");
 		miSetName.setActionCommand("setCustomName");
+		miSetName.setToolTipText("Einen eigenen Namen festlegen");
 		miSetName.addActionListener((ActionListener) controller);
 		
 		miRemoveName = new JMenuItem("Namen entfernen");
 		miRemoveName.setActionCommand("removeCustomName");
+		miRemoveName.setToolTipText("Eigenen Namen entfernen");
 		miRemoveName.addActionListener((ActionListener) controller);
 	}
 	
