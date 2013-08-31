@@ -16,16 +16,18 @@ public class VehicleSetupController extends Controller implements ActionListener
 	private TemplateModel templateModel;
 	private ChildModel childModel;
 	private VehicleModel vehicleModel;
+	private OutputModel outputModel;
 	
 	private VehicleSetupView setupView;
 	
 	public VehicleSetupController(CabinModel cabinModel, StructureModel structureModel, TemplateModel templateModel, ChildModel childModel,
-			VehicleModel vehicleModel) {
+			VehicleModel vehicleModel, OutputModel outputModel) {
 		this.cabinModel = cabinModel;
 		this.structureModel = structureModel;
 		this.templateModel = templateModel;
 		this.childModel = childModel;
 		this.vehicleModel = vehicleModel;
+		this.outputModel = outputModel;
 
 		this.setupView = new VehicleSetupView(this);
 		
@@ -34,6 +36,7 @@ public class VehicleSetupController extends Controller implements ActionListener
 		this.templateModel.addObserver(this);
 		this.childModel.addObserver(this);
 		this.vehicleModel.addObserver(this);
+		this.outputModel.addObserver(this);
 	}
 
 	@Override
@@ -70,8 +73,14 @@ public class VehicleSetupController extends Controller implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 			case "addChild":
-				vehicleModel.getChilds().add(((Child) setupView.getSelectorChild().getSelectedItem()).clone());
-				vehicleModel.notifyObservers(true);
+				Child sc = ((Child) setupView.getSelectorChild().getSelectedItem()).clone();
+				if(sc != null) {
+					vehicleModel.getChilds().add(sc);
+					vehicleModel.notifyObservers(true);
+					
+					outputModel.setSelectedChild(sc);
+					outputModel.notifyObservers();
+				}
 				break;
 		}
 	}

@@ -55,7 +55,7 @@ public class VBLauncher {
 		models.add(outputModel);
 		
 		VehicleSetupController vsetupController = new VehicleSetupController(cabinModel, structureModel, 
-				templateModel, childModel, vehicleModel);
+				templateModel, childModel, vehicleModel, outputModel);
 		
 		VehicleChildController vchildController = new VehicleChildController(vehicleModel, outputModel);
 		

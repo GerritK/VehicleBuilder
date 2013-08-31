@@ -50,6 +50,8 @@ public class VehicleChildController extends Controller implements ActionListener
 			}
 		} else if(o == outputModel) {
 			if(outputModel.getSelectedChild() != null) {
+				childView.getList().setSelectedValue(outputModel.getSelectedChild(), true);
+				
 				if(outputModel.getSelectedChild().isBehind()) {
 					childView.getBtnDrawOrder().setIcon(IconSet.BEHIND);
 				} else {
