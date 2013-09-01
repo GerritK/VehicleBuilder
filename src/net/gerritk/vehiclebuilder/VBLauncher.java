@@ -19,7 +19,7 @@ import net.gerritk.vehiclebuilder.resources.ResourceLoader;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderConfirmDialog;
 
 public class VBLauncher {
-	public static String VERSION = "1.0.0.0";
+	public static String VERSION = "0.0.3.0";
 	
 	private static VBLauncher instance;
 	
