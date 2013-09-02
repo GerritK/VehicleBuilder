@@ -2,6 +2,7 @@ package net.gerritk.vehiclebuilder.resources;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +14,11 @@ import net.gerritk.vehiclebuilder.items.*;
 public class ResourceLoader {	
 	private String path;
 	
-	public ResourceLoader(String path) {
+	public ResourceLoader(String path) throws FileNotFoundException {
+		File dir = new File(path);
+		if(!dir.exists()) {
+			throw new FileNotFoundException("can not find resources folder");
+		}
 		this.path = path;
 	}
 	

@@ -3,9 +3,11 @@ package net.gerritk.vehiclebuilder;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -34,12 +36,19 @@ public class VBLauncher {
 		} catch (ClassNotFoundException | InstantiationException
 				| IllegalAccessException | UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
-		}
-		
-		resourceLoader = new ResourceLoader("resources/items");		
+		}	
 		
 		frame = new JFrame("Vehicle Builder für Leitstellenspiel.de");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		try {
+			resourceLoader = new ResourceLoader("resources/items");
+		} catch(FileNotFoundException e) {
+			JOptionPane.showMessageDialog(null, "Der Resources-Ordner konnte nicht gefunden werden. Das Programm wird beendet.",
+					"Vehicle Builder - Resources nicht gefunden", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			return;
+		}
 		
 		CabinModel cabinModel = new CabinModel();
 		StructureModel structureModel = new StructureModel();

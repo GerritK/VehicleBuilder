@@ -3,6 +3,7 @@ package net.gerritk.vehiclebuilder.ui.dialogs;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.Toolkit;
 
 import javax.swing.JDialog;
 
@@ -15,6 +16,12 @@ public abstract class BuilderDialog extends JDialog {
 	
 	public BuilderDialog(Frame frame, String title) {
 		this(frame, title, false);
+	}
+	
+	public void setToScreenCenter() {
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		Point wp = new Point((int) (screenSize.getWidth() - this.getWidth()) / 2, (int) (screenSize.getHeight() - this.getHeight()) / 2);
+		this.setLocation(wp);
 	}
 	
 	@Override
