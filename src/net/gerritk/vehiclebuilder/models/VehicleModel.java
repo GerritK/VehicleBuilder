@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
@@ -235,7 +236,10 @@ public class VehicleModel extends Model {
 			// NEGATIV VALUES!!!
 			Point off = Child.getMinPositions(childs);
 			
-			for(Child child : childs) {
+			ArrayList<Child> reversed = new ArrayList<Child>(childs);
+			Collections.reverse(reversed);
+			
+			for(Child child : reversed) {
 				int yc = child.getY() - off.y;
 				int xc = child.getX() - off.x;
 				

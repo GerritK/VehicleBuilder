@@ -75,7 +75,7 @@ public class VehicleSetupController extends Controller implements ActionListener
 			case "addChild":
 				Child sc = ((Child) setupView.getSelectorChild().getSelectedItem()).clone();
 				if(sc != null) {
-					vehicleModel.getChilds().add(sc);
+					vehicleModel.getChilds().add(0, sc);;
 					vehicleModel.notifyObservers(true);
 					
 					outputModel.setSelectedChild(sc);
