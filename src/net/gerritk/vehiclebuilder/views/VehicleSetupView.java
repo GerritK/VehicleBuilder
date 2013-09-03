@@ -1,6 +1,9 @@
 package net.gerritk.vehiclebuilder.views;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseListener;
 
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -10,6 +13,8 @@ import com.jgoodies.forms.factories.FormFactory;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.items.*;
@@ -46,6 +51,7 @@ public class VehicleSetupView extends View {
 		
 		selectorCabin = new JComboBox<Cabin>();
 		selectorCabin.addItemListener((ItemListener) controller);
+		//selectorCabin.addMouseListener((MouseListener) controller);
 		selectorCabin.setToolTipText("Kabine auswählen");
 		add(selectorCabin, "3, 1, fill, default");
 		
@@ -55,6 +61,7 @@ public class VehicleSetupView extends View {
 		
 		selectorStructure = new JComboBox<Structure>();
 		selectorStructure.addItemListener((ItemListener) controller);
+		//selectorStructure.addMouseListener((MouseListener) controller);
 		selectorStructure.setToolTipText("Aufbau auswählen");
 		add(selectorStructure, "3, 3, fill, default");
 		
@@ -81,6 +88,46 @@ public class VehicleSetupView extends View {
 		btnAddChild.addActionListener((ActionListener) controller);
 		btnAddChild.setToolTipText("Zusatz zur Liste hinzufügen");
 		add(btnAddChild, "3, 9");
+	}
+	
+	public void showPopup(JComboBox<? extends Item> c) {
+		JPopupMenu popupMenu = new JPopupMenu();
+		
+		JPanel xPanel = new JPanel();
+		xPanel.add(new JLabel("X:"));
+		
+		xPanel.add(new JLabel("0"));
+		
+		JButton btnIncX = new JButton("+");
+		btnIncX.setMargin(new Insets(0, 0, 0, 0));
+		btnIncX.setPreferredSize(new Dimension(20, 20));
+		xPanel.add(btnIncX);
+		
+		JButton btnDecX = new JButton("-");
+		btnDecX.setMargin(new Insets(0, 0, 0, 0));
+		btnDecX.setPreferredSize(new Dimension(20, 20));
+		xPanel.add(btnDecX);
+		
+		popupMenu.add(xPanel);
+		
+		JPanel yPanel = new JPanel();
+		yPanel.add(new JLabel("Y:"));
+		
+		yPanel.add(new JLabel("0"));
+		
+		JButton btnIncY = new JButton("+");
+		btnIncY.setMargin(new Insets(0, 0, 0, 0));
+		btnIncY.setPreferredSize(new Dimension(20, 20));
+		yPanel.add(btnIncY);
+		
+		JButton btnDecY = new JButton("-");
+		btnDecY.setMargin(new Insets(0, 0, 0, 0));
+		btnDecY.setPreferredSize(new Dimension(20, 20));
+		yPanel.add(btnDecY);
+		
+		popupMenu.add(yPanel);
+		
+		popupMenu.show(c, 5, c.getHeight());
 	}
 	
 	/*

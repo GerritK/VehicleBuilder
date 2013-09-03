@@ -4,13 +4,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Observable;
+
+import javax.swing.JComboBox;
 
 import net.gerritk.vehiclebuilder.items.*;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.views.VehicleSetupView;
 
-public class VehicleSetupController extends Controller implements ActionListener, ItemListener {
+public class VehicleSetupController extends Controller implements ActionListener, ItemListener, MouseListener {
 	private CabinModel cabinModel;
 	private StructureModel structureModel;
 	private TemplateModel templateModel;
@@ -105,7 +109,37 @@ public class VehicleSetupController extends Controller implements ActionListener
 			}
 		}
 	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	}
 
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		if(e.isPopupTrigger()) {
+			setupView.showPopup(setupView.getSelectorCabin());
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if(e.isPopupTrigger()) {
+			if(e.getSource() instanceof JComboBox<?>) {
+				@SuppressWarnings("unchecked")
+				JComboBox<? extends Item> source = (JComboBox<? extends Item>) e.getSource();
+				setupView.showPopup(source);
+			}
+		}
+	}
+	
 	/*
 	 * Getter & Setter
 	 */
