@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage;
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 
+import javax.swing.JCheckBox;
 import javax.swing.JPopupMenu;
 import javax.swing.JSlider;
 import javax.swing.UIManager;
@@ -34,6 +35,7 @@ public class VehicleOutputView extends View {
 	private static final long serialVersionUID = 5415431084556862556L;
 	
 	private JSlider slColors[];
+	private JCheckBox cbBindSliders;
 	private JLabel lblScale;
 	private JButton btnBluelight;
 	private BufferedImage output;
@@ -80,6 +82,10 @@ public class VehicleOutputView extends View {
 		slColors[2].setName("blue");
 		slColors[2].setBackground(Color.BLUE);
 		
+		cbBindSliders = new JCheckBox("Farben aneinander binden");
+		cbBindSliders.setActionCommand("bindColors");
+		cbBindSliders.addActionListener((ActionListener) controller);
+		
 		this.addMouseListener((MouseListener) controller);
 		this.addMouseWheelListener((MouseWheelListener) controller);
 		this.addMouseMotionListener((MouseMotionListener) controller);
@@ -109,6 +115,8 @@ public class VehicleOutputView extends View {
 		for(JSlider slider : slColors) {
 			popupMenu.add(slider);
 		}
+		
+		popupMenu.add(cbBindSliders);
 		
 		popupMenu.show(this, p.x, p.y);
 	}
@@ -144,5 +152,9 @@ public class VehicleOutputView extends View {
 	public void setSelection(Rectangle selection) {
 		this.selection = selection;
 		repaint();
+	}
+	
+	public JCheckBox getCbBindSliders() {
+		return cbBindSliders;
 	}
 }

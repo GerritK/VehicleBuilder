@@ -120,17 +120,23 @@ public class VehicleOutputController extends Controller implements MouseListener
 			int r = outputModel.getBackground().getRed();
 			int g = outputModel.getBackground().getGreen();
 			int b = outputModel.getBackground().getBlue();
-
-			switch(slider.getName()) {
-				case "red":
-					r = slider.getValue();
-					break;
-				case "green":
-					g = slider.getValue();
-					break;
-				case "blue":
-					b = slider.getValue();
-					break;
+			
+			if(outputView.getCbBindSliders().isSelected()) {
+				r = slider.getValue();
+				g = slider.getValue();
+				b = slider.getValue();
+			} else {
+				switch(slider.getName()) {
+					case "red":
+						r = slider.getValue();
+						break;
+					case "green":
+						g = slider.getValue();
+						break;
+					case "blue":
+						b = slider.getValue();
+						break;
+				}
 			}
 
 			outputModel.setBackground(new Color(r, g, b));
@@ -171,6 +177,10 @@ public class VehicleOutputController extends Controller implements MouseListener
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("bluelight")) {
 			outputModel.setBluelight(!outputModel.isBluelight());
+			outputModel.notifyObservers();
+		} else if(e.getActionCommand().equals("bindColors")) {
+			JSlider slider = outputView.getSliders()[0];
+			outputModel.setBackground(new Color(slider.getValue(), slider.getValue(), slider.getValue()));
 			outputModel.notifyObservers();
 		}
 	}
