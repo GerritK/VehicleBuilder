@@ -4,15 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.File;
 import java.util.Observable;
-
-import javax.swing.JFileChooser;
 
 import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.models.*;
-import net.gerritk.vehiclebuilder.resources.SaveFileFilter;
-import net.gerritk.vehiclebuilder.resources.VehicleBuilderSaveFile;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderAboutDialog;
 import net.gerritk.vehiclebuilder.ui.dialogs.BuilderInfoDialog;
 import net.gerritk.vehiclebuilder.views.*;
@@ -51,40 +46,20 @@ public class VehicleBuilderController extends Controller implements ActionListen
 				
 				break;
 			case "save":
-				JFileChooser fc = new JFileChooser();
-				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fc.setFileFilter(new SaveFileFilter());
-				fc.setSelectedFile(new File(vehicleModel.getName() + ".vbsf"));
-				int value = fc.showSaveDialog(builderView);
-				
-				if(value == JFileChooser.APPROVE_OPTION) {
-					File f = fc.getSelectedFile();
-					
-					if(!VehicleBuilderSaveFile.saveToFile(f, vehicleModel)) {
-						infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
-								"Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
-						infoDialog.setVisible(true);
-					}
+				if(!vehicleModel.save()) {
+					infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
+							"Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
+					infoDialog.setVisible(true);
 				}
 				
 				break;
 			case "load":
-				fc = new JFileChooser();
-				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				fc.setSelectedFile(new File("vehicle.vbsf"));
-				fc.setFileFilter(new SaveFileFilter());
-				value = fc.showOpenDialog(builderView);
-				
-				if(value == JFileChooser.APPROVE_OPTION) {
-					File f = fc.getSelectedFile();
-					
-					if(VehicleBuilderSaveFile.loadFromFile(f, vehicleModel)) {
-						vehicleModel.notifyObservers();
-					} else {
-						infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
-								"Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
-						infoDialog.setVisible(true);
-					}
+				if(vehicleModel.load()) {
+					vehicleModel.notifyObservers();
+				} else {
+					infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
+							"Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
+					infoDialog.setVisible(true);
 				}
 				
 				break;

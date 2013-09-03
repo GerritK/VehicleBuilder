@@ -9,12 +9,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 
+import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.items.Bluelight;
 import net.gerritk.vehiclebuilder.items.Cabin;
 import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.items.Structure;
 import net.gerritk.vehiclebuilder.items.Template;
+import net.gerritk.vehiclebuilder.resources.SaveFileFilter;
+import net.gerritk.vehiclebuilder.resources.VehicleBuilderSaveFile;
 
 public class VehicleModel extends Model {
 	private String name;
@@ -31,12 +35,36 @@ public class VehicleModel extends Model {
 		name = structure.getName();
 	}
 	
-	public void save() {
-		// TODO implement new saveLogic
+	public boolean save() {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setFileFilter(new SaveFileFilter());
+		fc.setSelectedFile(new File(getName() + ".vbsf"));
+		int value = fc.showSaveDialog(VBLauncher.getInstance().getFrame());
+		
+		if(value == JFileChooser.APPROVE_OPTION) {
+			File f = fc.getSelectedFile();
+			
+			return VehicleBuilderSaveFile.saveToFile(f, this);
+		}
+		
+		return true;
 	}
 	
-	public void load() {
-		// TODO implement new loadLogic
+	public boolean load() {
+		JFileChooser fc = new JFileChooser();
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		fc.setSelectedFile(new File("vehicle.vbsf"));
+		fc.setFileFilter(new SaveFileFilter());
+		int value = fc.showOpenDialog(VBLauncher.getInstance().getFrame());
+		
+		if(value == JFileChooser.APPROVE_OPTION) {
+			File f = fc.getSelectedFile();
+			
+			return VehicleBuilderSaveFile.loadFromFile(f, this);
+		}
+		
+		return true;
 	}
 	
 	public boolean export() {
