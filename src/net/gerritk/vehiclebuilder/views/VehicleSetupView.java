@@ -13,6 +13,7 @@ import javax.swing.JButton;
 
 import net.gerritk.vehiclebuilder.controllers.Controller;
 import net.gerritk.vehiclebuilder.items.*;
+import net.gerritk.vehiclebuilder.ui.renderer.ChildSelectorRenderer;
 
 public class VehicleSetupView extends View {
 	private static final long serialVersionUID = 1330608725627293185L;
@@ -72,6 +73,7 @@ public class VehicleSetupView extends View {
 		
 		selectorChild = new JComboBox<Child>();
 		selectorChild.setToolTipText("Zusatz auswählen");
+		selectorChild.setRenderer(new ChildSelectorRenderer());
 		add(selectorChild, "3, 7, fill, default");
 		
 		JButton btnAddChild = new JButton("Hinzuf\u00FCgen");
