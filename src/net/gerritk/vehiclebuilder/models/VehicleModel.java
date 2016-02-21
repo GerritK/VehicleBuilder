@@ -150,15 +150,15 @@ public class VehicleModel extends Model {
 		Dimension d = new Dimension();
 
 		if(cabin != null) {
-			d.width += cabin.getWidth();
-			d.height = cabin.getHeight();
-		}
+            d.width += cabin.getWidth() - cabinOffset.getX();
+            d.height = (int) (cabin.getHeight() + cabinOffset.getY());
+        }
 
 		if(structure != null) {
-			d.width += structure.getWidth();
-			if(structure.getHeight() > d.height) {
-				d.height = structure.getHeight();
-			}
+            d.width += structure.getWidth() + structOffset.getX();
+            if (structure.getHeight() + structOffset.getY() > d.height) {
+                d.height = (int) (structure.getHeight() + structOffset.getY());
+            }
 		}
 
 		if(childs != null) {
@@ -244,8 +244,9 @@ public class VehicleModel extends Model {
 					}
 				}
 			}
-			p.x -= off.x;
-		}
+
+            p.x -= off.x;
+        }
 	}
 
 	private void drawCabin(Graphics2D g, Dimension d, Point p) {
