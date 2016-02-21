@@ -62,6 +62,7 @@ public class VehicleModel extends Model {
 		}
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	public boolean export() {
 		File dir = new File("output");
 
