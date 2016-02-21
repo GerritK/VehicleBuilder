@@ -120,6 +120,7 @@ public class VehicleSetupController extends Controller implements ActionListener
 		showPopup(e);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void showPopup(MouseEvent e) {
 		if (e.isPopupTrigger() && e.getSource() instanceof JComboBox) {
 			JComboBox source = (JComboBox) e.getSource();

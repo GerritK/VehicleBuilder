@@ -114,7 +114,7 @@ public class ResourceLoader {
 	}
 
 	public ArrayList<Child> loadBluelights() {
-		ArrayList<Child> childs = new ArrayList<Child>();
+        ArrayList<Child> childs = new ArrayList<>();
 
 		for(File file : getFiles("childs/bluelights", new FileNameExtensionFilter("Bilder", "png"))) {
 			try {
@@ -137,10 +137,13 @@ public class ResourceLoader {
 		File dir = new File(path + "/" + subdir);
 
 		if(dir.exists() && dir.isDirectory()) {
-			for(File file : dir.listFiles()) {
-				if(filter == null || filter.accept(file)) {
-					files.add(file);
-				}
+            File[] dirFiles = dir.listFiles();
+            if (dirFiles != null) {
+                for (File file : dirFiles) {
+                    if (filter == null || filter.accept(file)) {
+                        files.add(file);
+                    }
+                }
 			}
 		}
 
