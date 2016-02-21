@@ -1,40 +1,26 @@
 package net.gerritk.vehiclebuilder.controllers;
 
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.image.BufferedImage;
-import java.text.DecimalFormat;
-import java.util.Observable;
-
-import javax.swing.BorderFactory;
-import javax.swing.JSlider;
-import javax.swing.UIManager;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.models.OutputModel;
 import net.gerritk.vehiclebuilder.models.VehicleModel;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleOutputView;
 
-public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, MouseMotionListener, ChangeListener, ActionListener, FocusListener,
-		KeyListener {
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
+import java.util.Observable;
+
+public class VehicleOutputController extends Controller implements MouseListener, MouseWheelListener, MouseMotionListener, ChangeListener, ActionListener, FocusListener, KeyListener {
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
 	private VehicleOutputView outputView;
+
+	private Point mouse = new Point();
 
 	public VehicleOutputController(VehicleModel vehicleModel, OutputModel outputModel) {
 		this.vehicleModel = vehicleModel;
@@ -79,7 +65,7 @@ public class VehicleOutputController extends Controller implements MouseListener
 				Rectangle selection = outputModel.generateSelectionBorder(vehicleModel, c);
 				selection.x += x;
 				selection.y += y;
-	
+
 				if(selection.contains(e.getPoint())) {
 					outputModel.setSelectedChild(c);
 					outputModel.notifyObservers();
@@ -149,29 +135,32 @@ public class VehicleOutputController extends Controller implements MouseListener
 		Child c = outputModel.getSelectedChild();
 		if(c != null) {
 			Point d = new Point((int) ((e.getPoint().x - mouse.x) / outputModel.getScale()), (int) ((e.getPoint().y - mouse.y) / outputModel.getScale()));
-			
+
 			c.setX(c.getX() + d.x);
 			c.setY(c.getY() + d.y);
-			
+
 			if(d.x != 0 || d.y != 0) {
 				mouse.setLocation(e.getPoint());
 			}
-			
+
 			outputModel.notifyObservers(true);
 		}
 	}
-	
-	private Point mouse = new Point();
+
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		mouse.setLocation(e.getPoint());
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("bluelight")) {
 			outputModel.setBluelight(!outputModel.isBluelight());
 			outputModel.notifyObservers();
+		} else if (e.getActionCommand().equals("bindColors")) {
+			JSlider slider = this.outputView.getSliders()[0];
+			this.outputModel.setBackground(new Color(slider.getValue(), slider.getValue(), slider.getValue()));
+			this.outputModel.notifyObservers();
 		}
 	}
 

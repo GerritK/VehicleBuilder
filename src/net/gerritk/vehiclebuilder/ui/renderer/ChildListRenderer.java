@@ -1,14 +1,11 @@
 package net.gerritk.vehiclebuilder.ui.renderer;
 
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Font;
-
-import javax.swing.*;
-
 import net.gerritk.vehiclebuilder.items.Bluelight;
 import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.resources.IconSet;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class ChildListRenderer implements ListCellRenderer<Child> {
 	@Override
@@ -18,7 +15,7 @@ public class ChildListRenderer implements ListCellRenderer<Child> {
 		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
 		layout.setVgap(1);
 		panel.setLayout(layout);
-		
+
 		JLabel lblType = new JLabel(IconSet.SCREW);
 		if(value instanceof Bluelight) {
 			lblType.setIcon(IconSet.BLUELIGHT);
@@ -31,19 +28,19 @@ public class ChildListRenderer implements ListCellRenderer<Child> {
 			lblDrawOrder.setIcon(IconSet.BEHIND);
 		}
 		panel.add(lblDrawOrder);
-		
+
 		JLabel lblName = new JLabel(value.getName());
 		panel.add(lblName);
-		
+
 		if(value.getCustomName() != null && !value.getCustomName().isEmpty()) {
 			JLabel lblCustomName = new JLabel(value.getName());
 			lblCustomName.setFont(lblCustomName.getFont().deriveFont(Font.ITALIC));
 			lblCustomName.setForeground(UIManager.getColor("Label.disabledForeground"));
 			panel.add(lblCustomName);
-			
+
 			lblName.setText(value.getCustomName());
 		}
-		
+
 		if(selected) {
 			panel.setBackground(UIManager.getColor("List.selectionBackground"));
 			lblName.setForeground(UIManager.getColor("List.selectionForeground"));
@@ -51,7 +48,7 @@ public class ChildListRenderer implements ListCellRenderer<Child> {
 			panel.setBackground(UIManager.getColor("List.background"));
 			lblName.setForeground(UIManager.getColor("List.foreground"));
 		}
-		
+
 		return panel;
 	}
 }

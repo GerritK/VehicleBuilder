@@ -1,39 +1,32 @@
 package net.gerritk.vehiclebuilder.controllers;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.Observable;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import net.gerritk.vehiclebuilder.items.Child;
 import net.gerritk.vehiclebuilder.models.OutputModel;
 import net.gerritk.vehiclebuilder.models.VehicleModel;
 import net.gerritk.vehiclebuilder.resources.IconSet;
 import net.gerritk.vehiclebuilder.views.VehicleChildView;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Observable;
+
 public class VehicleChildController extends Controller implements ActionListener, ListSelectionListener, MouseListener, MouseMotionListener {
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
 	private VehicleChildView childView;
-	
+
 	public VehicleChildController(VehicleModel vehicleModel, OutputModel outputModel) {
 		this.vehicleModel = vehicleModel;
 		this.outputModel = outputModel;
 		this.childView = new VehicleChildView(this);
-		
+
 		this.vehicleModel.addObserver(this);
 		this.outputModel.addObserver(this);
 	}
-	
+
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o == vehicleModel) {
@@ -42,7 +35,7 @@ public class VehicleChildController extends Controller implements ActionListener
 			for(Child c : vehicleModel.getChilds()) {
 				model.addElement(c);
 			}
-			
+
 			if(model.isEmpty()) {
 				childView.getBtnClear().setEnabled(false);
 			} else {
@@ -51,13 +44,13 @@ public class VehicleChildController extends Controller implements ActionListener
 		} else if(o == outputModel) {
 			if(outputModel.getSelectedChild() != null) {
 				childView.getList().setSelectedValue(outputModel.getSelectedChild(), true);
-				
+
 				if(outputModel.getSelectedChild().isBehind()) {
 					childView.getBtnDrawOrder().setIcon(IconSet.BEHIND);
 				} else {
 					childView.getBtnDrawOrder().setIcon(IconSet.ONTOP);
 				}
-				
+
 				childView.getBtnUp().setEnabled(true);
 				childView.getBtnDown().setEnabled(true);
 				childView.getBtnDrawOrder().setEnabled(true);
@@ -68,11 +61,11 @@ public class VehicleChildController extends Controller implements ActionListener
 				childView.getBtnDrawOrder().setEnabled(false);
 				childView.getBtnDelete().setEnabled(false);
 			}
-			
+
 			childView.getList().repaint();
 		}
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
@@ -101,7 +94,7 @@ public class VehicleChildController extends Controller implements ActionListener
 				vehicleModel.notifyObservers(true);
 				break;
 			case "setCustomName":
-				String name = JOptionPane.showInputDialog(childView.getParent(), "Wie soll der Zusatz heißen?", "Namen ändern", 
+				String name = JOptionPane.showInputDialog(childView.getParent(), "Wie soll der Zusatz heiï¿½en?", "Namen ï¿½ndern",
 						JOptionPane.PLAIN_MESSAGE, null, null, outputModel.getSelectedChild().getCustomName()).toString();
 				outputModel.getSelectedChild().setCustomName(name);
 				outputModel.notifyObservers(true);
@@ -112,13 +105,13 @@ public class VehicleChildController extends Controller implements ActionListener
 				break;
 		}
 	}
-	
+
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		outputModel.setSelectedChild(childView.getList().getSelectedValue());
 		outputModel.notifyObservers();
 	}
-	
+
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		selectionWorkaround(e.getPoint());
@@ -127,7 +120,7 @@ public class VehicleChildController extends Controller implements ActionListener
 	@Override
 	public void mousePressed(MouseEvent e) {
 		selectionWorkaround(e.getPoint());
-		
+
 		if(e.isPopupTrigger()) {
 			childView.showPopupMenu();
 		}
@@ -136,7 +129,7 @@ public class VehicleChildController extends Controller implements ActionListener
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		selectionWorkaround(e.getPoint());
-		
+
 		if(e.isPopupTrigger()) {
 			childView.showPopupMenu();
 		}
@@ -157,7 +150,7 @@ public class VehicleChildController extends Controller implements ActionListener
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-	
+
 	public void selectionWorkaround(Point p) {
 		int index = childView.getList().getSelectedIndex();
 		if(index >= 0) {
@@ -167,7 +160,7 @@ public class VehicleChildController extends Controller implements ActionListener
 			}
 		}
 	}
-	
+
 	/*
 	 * Getter & Setter
 	 */

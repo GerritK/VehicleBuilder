@@ -1,36 +1,33 @@
 package net.gerritk.vehiclebuilder.controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.Observable;
-
 import net.gerritk.vehiclebuilder.items.*;
 import net.gerritk.vehiclebuilder.models.*;
 import net.gerritk.vehiclebuilder.views.VehicleSetupView;
 
-public class VehicleSetupController extends Controller implements ActionListener, ItemListener {
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.Observable;
+
+public class VehicleSetupController extends Controller implements ActionListener, ItemListener, MouseListener {
 	private CabinModel cabinModel;
 	private StructureModel structureModel;
 	private TemplateModel templateModel;
 	private ChildModel childModel;
 	private VehicleModel vehicleModel;
 	private OutputModel outputModel;
-	
+	private VehicleSetupOffsetController offsetController;
 	private VehicleSetupView setupView;
-	
-	public VehicleSetupController(CabinModel cabinModel, StructureModel structureModel, TemplateModel templateModel, ChildModel childModel,
-			VehicleModel vehicleModel, OutputModel outputModel) {
+
+	public VehicleSetupController(CabinModel cabinModel, StructureModel structureModel, TemplateModel templateModel, ChildModel childModel, VehicleModel vehicleModel, OutputModel outputModel) {
 		this.cabinModel = cabinModel;
 		this.structureModel = structureModel;
 		this.templateModel = templateModel;
 		this.childModel = childModel;
 		this.vehicleModel = vehicleModel;
 		this.outputModel = outputModel;
-
+		this.offsetController = new VehicleSetupOffsetController(vehicleModel);
 		this.setupView = new VehicleSetupView(this);
-		
+
 		this.cabinModel.addObserver(this);
 		this.structureModel.addObserver(this);
 		this.templateModel.addObserver(this);
@@ -77,7 +74,7 @@ public class VehicleSetupController extends Controller implements ActionListener
 				if(sc != null) {
 					vehicleModel.getChilds().add(sc);
 					vehicleModel.notifyObservers(true);
-					
+
 					outputModel.setSelectedChild(sc);
 					outputModel.notifyObservers();
 				}
@@ -89,7 +86,7 @@ public class VehicleSetupController extends Controller implements ActionListener
 	public void itemStateChanged(ItemEvent e) {
 		if(e.getStateChange() == ItemEvent.SELECTED) {
 			Item i = (Item) e.getItem();
-			
+
 			if(i instanceof Cabin) {
 				Cabin c = (Cabin) i;
 				vehicleModel.setCabin(c);
@@ -106,9 +103,34 @@ public class VehicleSetupController extends Controller implements ActionListener
 		}
 	}
 
-	/*
-	 * Getter & Setter
-	 */
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	public void mouseExited(MouseEvent e) {
+	}
+
+	public void mousePressed(MouseEvent e) {
+		showPopup(e);
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		showPopup(e);
+	}
+
+	private void showPopup(MouseEvent e) {
+		if (e.isPopupTrigger() && e.getSource() instanceof JComboBox) {
+			JComboBox source = (JComboBox) e.getSource();
+			if (source == setupView.getSelectorCabin()) {
+				setupView.showPopup(source, offsetController.getVehicleSetupOffsetView(0));
+			} else if (source == setupView.getSelectorStructure()) {
+				setupView.showPopup(source, offsetController.getVehicleSetupOffsetView(1));
+			}
+		}
+	}
+
 	public VehicleSetupView getVehicleSetupView() {
 		return setupView;
 	}

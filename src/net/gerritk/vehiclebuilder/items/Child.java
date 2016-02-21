@@ -1,28 +1,28 @@
 package net.gerritk.vehiclebuilder.items;
 
-import java.awt.Point;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Child extends Item implements Cloneable {
-
 	private int x;
 	private int y;
 	private boolean behind = true;
 	private String customName;
-	
+
 	public Child(String name, BufferedImage img, int x, int y) {
 		super(name, img);
-		
+
 		this.x = x;
 		this.y = y;
 	}
 
 	@Override
+	@SuppressWarnings("CloneDoesntCallSuperClone")
 	public Child clone() {
 		return new Child(getName(), getImage(), getX(), getY());
 	}
-	
+
 	/*
 	 * Getter & Setter
 	 */
@@ -54,33 +54,33 @@ public class Child extends Item implements Cloneable {
 	 */
 	public static Point getMaxPositions(ArrayList<Child> list) {
 		Point p = new Point(0, 0);
-		
+
 		for(Child child : list) {
 			if(child.getX() + child.getWidth() > p.x) {
 				p.x = child.getX() + child.getWidth();
 			}
-			
+
 			if(child.getY() + child.getHeight() > p.y) {
 				p.y = child.getY() + child.getHeight();
 			}
 		}
-		
+
 		return p;
 	}
-	
+
 	public static Point getMinPositions(ArrayList<Child> list) {
 		Point p = new Point(0, 0);
-		
+
 		for(Child child : list) {
 			if(child.getX() < p.x) {
 				p.x = child.getX();
 			}
-			
+
 			if(child.getY() < p.y) {
 				p.y = child.getY();
 			}
 		}
-		
+
 		return p;
 	}
 

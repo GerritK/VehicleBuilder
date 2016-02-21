@@ -1,15 +1,15 @@
 package net.gerritk.vehiclebuilder.models;
 
-import java.util.ArrayList;
-
 import net.gerritk.vehiclebuilder.VBLauncher;
 import net.gerritk.vehiclebuilder.items.Template;
 
+import java.util.ArrayList;
+
 public class TemplateModel extends Model {
 	private ArrayList<Template> templates;
-	
+
 	public TemplateModel() {
-		templates = new ArrayList<Template>();
+		templates = new ArrayList<>();
 		templates.addAll(VBLauncher.getInstance().getResourceLoader().loadTemplates());
 	}
 
@@ -19,7 +19,7 @@ public class TemplateModel extends Model {
 	public ArrayList<Template> getTemplates() {
 		return templates;
 	}
-	
+
 	public void setTemplates(ArrayList<Template> templates) {
 		this.templates = templates;
 		setChanged();
