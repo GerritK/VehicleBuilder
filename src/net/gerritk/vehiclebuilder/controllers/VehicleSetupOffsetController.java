@@ -24,10 +24,12 @@ public class VehicleSetupOffsetController extends Controller implements ChangeLi
 
     public void update(Observable o, Object arg) {
         if (o == this.vehicleModel) {
-            if (this.type == 0) {
+            getLogger().log("VehicleSetupOffsetController", "Updating from vehicle model...");
+
+            if (this.type == CABIN) {
                 view.getSpinnerOffsetX().setValue(vehicleModel.getCabinOffsetX());
                 view.getSpinnerOffsetY().setValue(vehicleModel.getCabinOffsetY());
-            } else if (this.type == 1) {
+            } else if (this.type == STRUCTURE) {
                 view.getSpinnerOffsetX().setValue(vehicleModel.getStructureOffsetX());
                 view.getSpinnerOffsetY().setValue(vehicleModel.getStructureOffsetY());
             }

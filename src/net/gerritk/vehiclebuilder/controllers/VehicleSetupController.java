@@ -39,27 +39,32 @@ public class VehicleSetupController extends Controller implements ActionListener
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o instanceof CabinModel) {
-			setupView.getSelectorCabin().removeAllItems();
+            getLogger().log("VehicleSetupController", "Updating from cabin model...");
+            setupView.getSelectorCabin().removeAllItems();
 			for(Cabin c : ((CabinModel) o).getCabins()) {
 				setupView.getSelectorCabin().addItem(c);
 			}
 		} else if(o instanceof StructureModel) {
-			setupView.getSelectorStructure().removeAllItems();
+            getLogger().log("VehicleSetupController", "Updating from structure model...");
+            setupView.getSelectorStructure().removeAllItems();
 			for(Structure s : ((StructureModel) o).getStructures()) {
 				setupView.getSelectorStructure().addItem(s);
 			}
 		} else if(o instanceof TemplateModel) {
-			setupView.getSelectorTemplate().removeAllItems();
+            getLogger().log("VehicleSetupController", "Updating from template model...");
+            setupView.getSelectorTemplate().removeAllItems();
 			for(Template t : ((TemplateModel) o).getTemplates()) {
 				setupView.getSelectorTemplate().addItem(t);
 			}
 		} else if(o instanceof ChildModel) {
-			setupView.getSelectorChild().removeAllItems();
+            getLogger().log("VehicleSetupController", "Updating from child model...");
+            setupView.getSelectorChild().removeAllItems();
 			for(Child c : ((ChildModel) o).getChilds()) {
 				setupView.getSelectorChild().addItem(c);
 			}
 		} else if(o instanceof VehicleModel) {
-			VehicleModel vm = (VehicleModel) o;
+            getLogger().log("VehicleSetupController", "Updating from vehicle model...");
+            VehicleModel vm = (VehicleModel) o;
 			setupView.getSelectorCabin().setSelectedItem(vm.getCabin());
 			setupView.getSelectorStructure().setSelectedItem(vm.getStructure());
 			setupView.getSelectorTemplate().setSelectedItem(vm.getTemplate());
@@ -70,7 +75,8 @@ public class VehicleSetupController extends Controller implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 			case "addChild":
-				Child sc = ((Child) setupView.getSelectorChild().getSelectedItem()).clone();
+                getLogger().log("VehicleSetupController", "Adding child to vehicle...");
+                Child sc = ((Child) setupView.getSelectorChild().getSelectedItem()).clone();
 				if(sc != null) {
 					vehicleModel.getChilds().add(sc);
 					vehicleModel.notifyObservers(true);
@@ -89,15 +95,18 @@ public class VehicleSetupController extends Controller implements ActionListener
 
 			if(i instanceof Cabin) {
 				Cabin c = (Cabin) i;
-				vehicleModel.setCabin(c);
+                getLogger().log("VehicleSetupController", "Changed cabin selection to '" + c + "'.");
+                vehicleModel.setCabin(c);
 				vehicleModel.notifyObservers();
 			} else if(i instanceof Structure) {
 				Structure s = (Structure) i;
-				vehicleModel.setStructure(s);
+                getLogger().log("VehicleSetupController", "Changed structure selection to '" + s + "'.");
+                vehicleModel.setStructure(s);
 				vehicleModel.notifyObservers();
 			} else if(i instanceof Template) {
 				Template t = (Template) i;
-				vehicleModel.setTemplate(t);
+                getLogger().log("VehicleSetupController", "Changed template selection to '" + t + "'.");
+                vehicleModel.setTemplate(t);
 				vehicleModel.notifyObservers();
 			}
 		}
@@ -125,9 +134,11 @@ public class VehicleSetupController extends Controller implements ActionListener
 		if (e.isPopupTrigger() && e.getSource() instanceof JComboBox) {
 			JComboBox source = (JComboBox) e.getSource();
 			if (source == setupView.getSelectorCabin()) {
-				setupView.showPopup(source, offsetController.getVehicleSetupOffsetView(0));
+                getLogger().log("VehicleSetupController", "Showing popup menu for cabin...");
+                setupView.showPopup(source, offsetController.getVehicleSetupOffsetView(0));
 			} else if (source == setupView.getSelectorStructure()) {
-				setupView.showPopup(source, offsetController.getVehicleSetupOffsetView(1));
+                getLogger().log("VehicleSetupController", "Showing popup menu for structure...");
+                setupView.showPopup(source, offsetController.getVehicleSetupOffsetView(1));
 			}
 		}
 	}

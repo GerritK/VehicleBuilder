@@ -40,20 +40,26 @@ public class VehicleBuilderController extends Controller implements ActionListen
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+        vehicleModel.setName(builderView.getTxtName().getText());
+
 		switch(e.getActionCommand()) {
 			case "export":
-				vehicleModel.setName(builderView.getTxtName().getText());
+                getLogger().log("VehicleBuilderController", "Exporting vehicle '" + vehicleModel.getName() + "'...");
 
 				BuilderInfoDialog infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Exportiervorgang",
 						"Exportiervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
 				if(vehicleModel.export()) {
-					infoDialog.setInfo("Exportiervorgang war erfolgreich.");
-				}
-				infoDialog.setVisible(true);
+                    getLogger().log("VehicleBuilderController", "Export was successful!");
+                    infoDialog.setInfo("Exportiervorgang war erfolgreich.");
+                } else {
+                    getLogger().error("VehicleBuilderController", "Export failed!");
+                }
 
+				infoDialog.setVisible(true);
 				break;
 			case "save":
-				JFileChooser fc = new JFileChooser();
+                getLogger().log("VehicleBuilderController", "Saving vehicle '" + vehicleModel.getName() + "'...");
+                JFileChooser fc = new JFileChooser();
 				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fc.setFileFilter(new SaveFileFilter());
 				fc.setSelectedFile(new File(vehicleModel.getName() + ".vbsf"));
@@ -61,16 +67,21 @@ public class VehicleBuilderController extends Controller implements ActionListen
 
 				if(value == JFileChooser.APPROVE_OPTION) {
 					File f = fc.getSelectedFile();
+                    getLogger().log("VehicleBuilderController", "Destination to save vehicle chosen: " + f.getPath());
 
 					if (!VehicleBuilderSaveFile.saveToFile(f, vehicleModel)) {
-						infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
+                        getLogger().error("VehicleBuilderController", "Saving vehicle failed!");
+                        infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Speichervorgang",
 								"Speichervorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
 						infoDialog.setVisible(true);
-					}
-				}
+                    } else {
+                        getLogger().error("VehicleBuilderController", "Vehicle saved successfully!");
+                    }
+                }
 				break;
 			case "load":
-				fc = new JFileChooser();
+                getLogger().log("VehicleBuilderController", "Loading vehicle...");
+                fc = new JFileChooser();
 				fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fc.setSelectedFile(new File("vehicle.vbsf"));
 				fc.setFileFilter(new SaveFileFilter());
@@ -78,22 +89,27 @@ public class VehicleBuilderController extends Controller implements ActionListen
 
 				if (value == JFileChooser.APPROVE_OPTION) {
 					File f = fc.getSelectedFile();
+                    getLogger().log("VehicleBuilderController", "File to load vehicle from: " + f.getPath());
 
 					if (VehicleBuilderSaveFile.loadFromFile(f, vehicleModel)) {
-						vehicleModel.notifyObservers();
+                        getLogger().log("VehicleBuilderController", "Successfully loaded vehicle '" + vehicleModel.getName() + "'.");
+                        vehicleModel.notifyObservers();
 					} else {
-						infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
+                        getLogger().error("VehicleBuilderController", "Failed to load vehicle.");
+                        infoDialog = new BuilderInfoDialog(VBLauncher.getInstance().getFrame(), "Ladevorgang",
 								"Ladevorgang ist fehlgeschlagen. Versuchen Sie es bitte erneut.");
 						infoDialog.setVisible(true);
 					}
 				}
 				break;
 			case "about":
-				BuilderAboutDialog aboutDialog = new BuilderAboutDialog(VBLauncher.getInstance().getFrame());
+                getLogger().log("VehicleBuilderController", "Showing about dialog...");
+                BuilderAboutDialog aboutDialog = new BuilderAboutDialog(VBLauncher.getInstance().getFrame());
 				aboutDialog.setVisible(true);
 				break;
 			case "quit":
-				VBLauncher.getInstance().quit();
+                getLogger().log("VehicleBuilderController", "User requested to quit...");
+                VBLauncher.getInstance().quit();
 				break;
 		}
 	}

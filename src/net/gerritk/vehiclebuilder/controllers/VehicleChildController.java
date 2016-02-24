@@ -30,7 +30,8 @@ public class VehicleChildController extends Controller implements ActionListener
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o == vehicleModel) {
-			DefaultListModel<Child> model = (DefaultListModel<Child>) childView.getList().getModel();
+            getLogger().log("VehicleChildController", "Updating from vehicle model...");
+            DefaultListModel<Child> model = (DefaultListModel<Child>) childView.getList().getModel();
 			model.clear();
 			for(Child c : vehicleModel.getChilds()) {
 				model.addElement(c);
@@ -42,7 +43,8 @@ public class VehicleChildController extends Controller implements ActionListener
 				childView.getBtnClear().setEnabled(true);
 			}
 		} else if(o == outputModel) {
-			if(outputModel.getSelectedChild() != null) {
+            getLogger().log("VehicleChildController", "Updating from output model...");
+            if(outputModel.getSelectedChild() != null) {
 				childView.getList().setSelectedValue(outputModel.getSelectedChild(), true);
 
 				if(outputModel.getSelectedChild().isBehind()) {
@@ -70,37 +72,46 @@ public class VehicleChildController extends Controller implements ActionListener
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()) {
 			case "up":
-				vehicleModel.sortChildUp(outputModel.getSelectedChild());
+                getLogger().log("VehicleChildController", "Sorting child '" + outputModel.getSelectedChild() + "' up.");
+                vehicleModel.sortChildUp(outputModel.getSelectedChild());
 				Child tmp = outputModel.getSelectedChild();
 				vehicleModel.notifyObservers();
 				childView.getList().setSelectedValue(tmp, true);
 				break;
 			case "down":
-				vehicleModel.sortChildDown(outputModel.getSelectedChild());
+                getLogger().log("VehicleChildController", "Sorting child '" + outputModel.getSelectedChild() + "' down.");
+                vehicleModel.sortChildDown(outputModel.getSelectedChild());
 				tmp = outputModel.getSelectedChild();
 				vehicleModel.notifyObservers();
 				childView.getList().setSelectedValue(tmp, true);
 				break;
 			case "drawOrder":
-				outputModel.getSelectedChild().setBehind(!outputModel.getSelectedChild().isBehind());
+                getLogger().log("VehicleChildController", "Changing draw order of child '" + outputModel.getSelectedChild() + "' to "
+                        + (outputModel.getSelectedChild().isBehind() ? "behind" : "in front") + ".");
+                outputModel.getSelectedChild().setBehind(!outputModel.getSelectedChild().isBehind());
 				outputModel.notifyObservers(true);
 				break;
 			case "delete":
-				vehicleModel.getChilds().remove(childView.getList().getSelectedValue());
+                getLogger().log("VehicleChildController", "Deleting child '" + outputModel.getSelectedChild() + "'.");
+                vehicleModel.getChilds().remove(childView.getList().getSelectedValue());
 				vehicleModel.notifyObservers(true);
 				break;
 			case "clear":
-				vehicleModel.getChilds().clear();
+                getLogger().log("VehicleChildController", "Clearing childs.");
+                vehicleModel.getChilds().clear();
 				vehicleModel.notifyObservers(true);
 				break;
 			case "setCustomName":
-				String name = JOptionPane.showInputDialog(childView.getParent(), "Wie soll der Zusatz hei�en?", "Namen �ndern",
-						JOptionPane.PLAIN_MESSAGE, null, null, outputModel.getSelectedChild().getCustomName()).toString();
-				outputModel.getSelectedChild().setCustomName(name);
+                getLogger().log("VehicleChildController", "Changing custom name of child '" + outputModel.getSelectedChild() + "'.");
+                String name = JOptionPane.showInputDialog(childView.getParent(), "Wie soll der Zusatz heißen?", "Namen ändern",
+                        JOptionPane.PLAIN_MESSAGE, null, null, outputModel.getSelectedChild().getCustomName()).toString();
+                getLogger().log("VehicleChildController", "Changed custom name of child '" + outputModel.getSelectedChild() + "' to '" + name + "'.");
+                outputModel.getSelectedChild().setCustomName(name);
 				outputModel.notifyObservers(true);
 				break;
 			case "removeCustomName":
-				outputModel.getSelectedChild().setCustomName(null);
+                getLogger().log("VehicleChildController", "Removing custom name of child '" + outputModel.getSelectedChild() + "'.");
+                outputModel.getSelectedChild().setCustomName(null);
 				outputModel.notifyObservers(true);
 				break;
 		}
@@ -109,7 +120,8 @@ public class VehicleChildController extends Controller implements ActionListener
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		outputModel.setSelectedChild(childView.getList().getSelectedValue());
-		outputModel.notifyObservers();
+        getLogger().log("VehicleChildController", "Changed selection to child '" + outputModel.getSelectedChild() + "'.");
+        outputModel.notifyObservers();
 	}
 
 	@Override

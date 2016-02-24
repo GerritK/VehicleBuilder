@@ -35,7 +35,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o == outputModel) {
-			outputView.setBackground(outputModel.getBackground());
+            getLogger().log("VehicleOutputController", "Updating from output model...");
+            outputView.setBackground(outputModel.getBackground());
 			outputView.getSliders()[0].setValue(outputModel.getBackground().getRed());
 			outputView.getSliders()[1].setValue(outputModel.getBackground().getGreen());
 			outputView.getSliders()[2].setValue(outputModel.getBackground().getBlue());
@@ -48,7 +49,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 			}
 		}
 
-		BufferedImage output = outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight()));
+        getLogger().log("VehicleOutputController", "Getting output image...");
+        BufferedImage output = outputModel.scaleImage(vehicleModel.generateOutput(outputModel.isBluelight()));
 		outputView.setOutput(output);
 
 		outputView.setSelection(outputModel.generateSelectionBorder(vehicleModel));
@@ -155,7 +157,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals("bluelight")) {
-			outputModel.setBluelight(!outputModel.isBluelight());
+            getLogger().log("VehicleOutputController", "Toggled bluelight state by button: " + !outputModel.isBluelight());
+            outputModel.setBluelight(!outputModel.isBluelight());
 			outputModel.notifyObservers();
 		} else if (e.getActionCommand().equals("bindColors")) {
 			JSlider slider = this.outputView.getSliders()[0];
@@ -188,7 +191,8 @@ public class VehicleOutputController extends Controller implements MouseListener
 	@Override
 	public void keyReleased(KeyEvent e) {
 		if(e.getKeyCode() == KeyEvent.VK_B) {
-			outputModel.setBluelight(!outputModel.isBluelight());
+            getLogger().log("VehicleOutputController", "Toggled bluelight state by key: " + !outputModel.isBluelight());
+            outputModel.setBluelight(!outputModel.isBluelight());
 			outputModel.notifyObservers();
 		}
 	}
