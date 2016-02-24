@@ -30,6 +30,8 @@ public class VBLauncher {
 
 	private VBLauncher() {
         getLogger().log("Launcher", "Starting VehicleBuilder V" + VERSION);
+        getLogger().info("Launcher", "System: " + System.getProperty("os.name") + " " + System.getProperty("os.arch") + " " + System.getProperty("os.version"));
+        getLogger().info("Launcher", "Java: " + System.getProperty("java.vendor") + " " + System.getProperty("java.version"));
 
 		instance = this;
 		try {
