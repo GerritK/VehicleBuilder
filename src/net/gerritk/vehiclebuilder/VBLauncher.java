@@ -173,6 +173,10 @@ public class VBLauncher {
     }
 
 	public static void main(String[] args) {
-		new VBLauncher();
-	}
+        try {
+            new VBLauncher();
+        } catch (Exception e) {
+            getLogger().error("Launcher", e);
+        }
+    }
 }
